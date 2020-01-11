@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ae2c31c7-476c-41e5-a4eb-3f7885d442a7" name="Default Changelist" comment="Initial commit of gradle version of RacingGame project">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/scene.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/MainApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Engine.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Gearbox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Vehicle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/WeightTransfer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Wheel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Percent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Vector2d.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/car.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/szewoj/race2d/sample.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/track.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="RacingGame2d" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="RacingGame2d" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="RacingGame2d" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="RacingGame2d" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SET_USER_NAME_GLOBALLY" value="false" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1WFyqfLH2BS7nDtrPuxF4thsi80" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/main/resources/szewoj/race2d" />
+      <recent name="$PROJECT_DIR$/src/main/java/szewoj/race2d" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="szewoj.race2d.view" />
+      <recent name="szewoj.race2d.controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities" />
+      <recent name="$PROJECT_DIR$/src/main/java/szewoj/race2d/model" />
+      <recent name="$PROJECT_DIR$/src/main/java/szewoj/race2d" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.RacingGame2d [run]">
+    <configuration name="RacingGame2d [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RacingGame2d [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RacingGame2d [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="RacingGame2d.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/RacingGame2d.jar" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.RacingGame2d [run]" />
+        <item itemvalue="JAR Application.RacingGame2d.jar" />
+        <item itemvalue="Gradle.RacingGame2d [clean]" />
+        <item itemvalue="Gradle.RacingGame2d [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ae2c31c7-476c-41e5-a4eb-3f7885d442a7" name="Default Changelist" comment="" />
+      <created>1578759829125</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578759829125</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit of gradle version of RacingGame project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit of gradle version of RacingGame project" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1003" y="222" width="847" height="677" key="#Project_Structure" timestamp="1578763061385">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state x="1003" y="222" width="847" height="677" key="#Project_Structure/59.27.1861.948@59.27.1861.948" timestamp="1578763061385" />
+    <state x="722" y="249" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578761734694">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state x="722" y="249" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/59.27.1861.948@59.27.1861.948" timestamp="1578761734694" />
+    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2" timestamp="1578764487212">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2/59.27.1861.948@59.27.1861.948" timestamp="1578764487212" />
+    <state width="1815" height="244" key="GridCell.Tab.0.bottom" timestamp="1578763611208">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state width="1815" height="244" key="GridCell.Tab.0.bottom/59.27.1861.948@59.27.1861.948" timestamp="1578763611208" />
+    <state width="1815" height="244" key="GridCell.Tab.0.center" timestamp="1578763611207">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state width="1815" height="244" key="GridCell.Tab.0.center/59.27.1861.948@59.27.1861.948" timestamp="1578763611206" />
+    <state width="1815" height="244" key="GridCell.Tab.0.left" timestamp="1578763611205">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state width="1815" height="244" key="GridCell.Tab.0.left/59.27.1861.948@59.27.1861.948" timestamp="1578763611205" />
+    <state width="1815" height="244" key="GridCell.Tab.0.right" timestamp="1578763611207">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state width="1815" height="244" key="GridCell.Tab.0.right/59.27.1861.948@59.27.1861.948" timestamp="1578763611207" />
+  </component>
+</project>
