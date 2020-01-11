@@ -54,6 +54,7 @@ public class GameController {
         mainViewManager.setRpmPosition( raceCarModel.getRpm() );
 
         mainViewManager.updateHitboxes();
+        mainViewManager.checkAllBarrierCollisions();
     }
 
 

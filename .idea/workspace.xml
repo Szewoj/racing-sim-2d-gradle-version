@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ae2c31c7-476c-41e5-a4eb-3f7885d442a7" name="Default Changelist" comment="Initial commit of gradle version of RacingGame project">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/scene.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/MainApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Engine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Gearbox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Vehicle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/WeightTransfer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Wheel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Percent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Vector2d.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/car.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/szewoj/race2d/sample.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/track.png" afterDir="false" />
+    <list default="true" id="ae2c31c7-476c-41e5-a4eb-3f7885d442a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/scene.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/szewoj/race2d/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/szewoj/race2d/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/track.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/track.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +83,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -223,6 +203,14 @@
       <option name="presentableId" value="Default" />
       <updated>1578759829125</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit of gradle version of RacingGame project">
+      <created>1578764528483</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1578764528483</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -233,7 +221,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -252,25 +242,29 @@
       <screen x="59" y="27" width="1861" height="948" />
     </state>
     <state x="722" y="249" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/59.27.1861.948@59.27.1861.948" timestamp="1578761734694" />
-    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2" timestamp="1578764487212">
+    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2" timestamp="1578764528331">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2/59.27.1861.948@59.27.1861.948" timestamp="1578764487212" />
-    <state width="1815" height="244" key="GridCell.Tab.0.bottom" timestamp="1578763611208">
+    <state x="519" y="96" width="930" height="807" key="CommitChangelistDialog2/59.27.1861.948@59.27.1861.948" timestamp="1578764528331" />
+    <state width="1815" height="244" key="GridCell.Tab.0.bottom" timestamp="1578771363908">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state width="1815" height="244" key="GridCell.Tab.0.bottom/59.27.1861.948@59.27.1861.948" timestamp="1578763611208" />
-    <state width="1815" height="244" key="GridCell.Tab.0.center" timestamp="1578763611207">
+    <state width="1815" height="244" key="GridCell.Tab.0.bottom/59.27.1861.948@59.27.1861.948" timestamp="1578771363908" />
+    <state width="1815" height="244" key="GridCell.Tab.0.center" timestamp="1578771363906">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state width="1815" height="244" key="GridCell.Tab.0.center/59.27.1861.948@59.27.1861.948" timestamp="1578763611206" />
-    <state width="1815" height="244" key="GridCell.Tab.0.left" timestamp="1578763611205">
+    <state width="1815" height="244" key="GridCell.Tab.0.center/59.27.1861.948@59.27.1861.948" timestamp="1578771363906" />
+    <state width="1815" height="244" key="GridCell.Tab.0.left" timestamp="1578771363905">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state width="1815" height="244" key="GridCell.Tab.0.left/59.27.1861.948@59.27.1861.948" timestamp="1578763611205" />
-    <state width="1815" height="244" key="GridCell.Tab.0.right" timestamp="1578763611207">
+    <state width="1815" height="244" key="GridCell.Tab.0.left/59.27.1861.948@59.27.1861.948" timestamp="1578771363905" />
+    <state width="1815" height="244" key="GridCell.Tab.0.right" timestamp="1578771363907">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state width="1815" height="244" key="GridCell.Tab.0.right/59.27.1861.948@59.27.1861.948" timestamp="1578763611207" />
+    <state width="1815" height="244" key="GridCell.Tab.0.right/59.27.1861.948@59.27.1861.948" timestamp="1578771363907" />
+    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1578764789600">
+      <screen x="59" y="27" width="1861" height="948" />
+    </state>
+    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2/59.27.1861.948@59.27.1861.948" timestamp="1578764789600" />
   </component>
 </project>

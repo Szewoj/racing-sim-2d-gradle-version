@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -34,6 +35,7 @@ public class ViewManager {
     @FXML private TitledPane pitstopPane;
     @FXML private Rectangle pitstopHitbox;
     @FXML private Label gearDisplay;
+    @FXML private Line barier1;
 
     public ViewManager() {
         rpmPosition = new Rotate( -90, -40, 40 );
@@ -156,4 +158,9 @@ public class ViewManager {
             pitstopPane.setVisible(false);
     }
 
+    @FXML
+    public void checkAllBarrierCollisions(){
+        if( checkCollision(carHitbox, barier1))
+            System.out.println("collides");
+    }
 }

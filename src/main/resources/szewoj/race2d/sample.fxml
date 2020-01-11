@@ -16,6 +16,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -23,14 +24,59 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="szewoj.race2d.view.ViewManager">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#329641" height="800.0" stroke="#329641" strokeType="INSIDE" width="1280.0" />
-      <Group fx:id="trackGroup" layoutX="2238.0" layoutY="-192.0">
+      <Group fx:id="trackGroup" layoutY="1000.0">
          <children>
-            <ImageView fx:id="trackSprite" fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true" scaleX="5.0" scaleY="5.0" smooth="false">
-               <image>
-                  <Image url="@../../track.png" />
-               </image>
-            </ImageView>
-            <Rectangle fx:id="pitstopHitbox" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="67.0" layoutX="-16.0" layoutY="2234.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="241.0" />
+            <Group>
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcefb6" height="1078.0" stroke="BLACK" strokeType="INSIDE" width="1141.0" />
+                  <ImageView fx:id="trackSprite" fitHeight="1080.0" fitWidth="1920.0" layoutX="26.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                     <image>
+                        <Image url="@../../track.png" />
+                     </image>
+                  </ImageView>
+                  <Rectangle fx:id="pitstopHitbox" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="16.0" layoutX="243.0" layoutY="594.0" stroke="BLACK" strokeType="INSIDE" width="6.0" />
+                  <Line fx:id="barier1" endX="219.0" endY="279.0" startX="202.0" startY="890.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="216.0" endY="994.0" layoutX="10.0" layoutY="10.0" startX="192.0" startY="882.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="384.0" endY="985.0" layoutX="20.0" layoutY="20.0" startX="208.0" startY="985.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="375.0" endY="975.0" layoutX="30.0" layoutY="30.0" startX="426.0" startY="946.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="418.0" endY="935.0" layoutX="40.0" layoutY="40.0" startX="530.0" startY="514.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="520.0" endY="504.0" layoutX="50.0" layoutY="50.0" startX="505.0" startY="410.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="494.66668701171875" endY="398.6666259765625" layoutX="60.0" layoutY="60.0" startX="454.66668701171875" startY="337.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="465.33331298828125" endY="284.0" layoutX="70.0" layoutY="70.0" startX="445.33331298828125" startY="327.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="614.6666870117188" endY="239.3333740234375" layoutX="80.0" layoutY="80.0" startX="455.33331298828125" startY="274.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="604.6666870117188" endY="230.0" layoutX="90.0" layoutY="90.0" startX="644.0" startY="279.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="634.6666870117188" endY="270.6666259765625" layoutX="100.0" layoutY="100.0" startX="544.6666870117188" startY="490.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="534.6666870117188" endY="480.0" layoutX="110.0" layoutY="110.0" startX="570.6666870117188" startY="577.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="543.0" endY="505.3333740234375" layoutX="137.0" layoutY="182.0" startX="620.3333129882812" startY="585.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="853.0" endY="54.0" layoutX="147.0" layoutY="192.0" startX="610.3333129882812" startY="575.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="875.0" endY="-120.6666259765625" layoutX="157.0" layoutY="202.0" startX="843.0" startY="45.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="865.0" endY="-130.6666259765625" layoutX="167.0" layoutY="212.0" startX="837.6666870117188" startY="-150.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="826.0" endY="-161.0" layoutX="177.0" layoutY="222.0" startX="42.0" startY="58.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="309.3333435058594" endY="956.0" layoutX="20.0" layoutY="20.0" startX="225.3333282470703" startY="927.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="204.0" endY="850.0" layoutX="30.0" layoutY="30.0" startX="214.0" startY="917.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="194.0" endY="724.6666259765625" layoutX="40.0" layoutY="40.0" startX="194.0" startY="840.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="184.6666717529297" endY="714.0" layoutX="50.0" layoutY="50.0" startX="195.3333282470703" startY="420.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="158.3333282470703" endY="459.3333740234375" layoutX="91.0" layoutY="-126.0" startX="154.3333282470703" startY="596.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="149.6666717529297" endY="448.0" layoutX="101.0" layoutY="-116.0" startX="163.66665649414062" startY="440.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="336.0" endY="971.0" layoutX="38.0" layoutY="3.0" startX="245.33334350585938" startY="943.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="202.6666717529297" endY="887.6666259765625" layoutX="48.0" layoutY="13.0" startX="236.0" startY="933.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="215.0" endY="369.0" layoutX="51.0" layoutY="-27.0" startX="200.3333282470703" startY="927.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="123.66665649414062" endY="451.3333740234375" layoutX="143.0" layoutY="-110.0" startX="396.33331298828125" startY="356.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="648.3333129882812" endY="298.0" layoutX="153.0" layoutY="-100.0" startX="388.33331298828125" startY="344.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="833.0" endY="188.0" layoutX="163.0" layoutY="-90.0" startX="639.0" startY="288.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="823.6666870117188" endY="178.6666259765625" layoutX="173.0" layoutY="-80.0" startX="575.6666870117188" startY="788.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="590.3333129882812" endY="566.3333740234375" layoutX="125.0" layoutY="109.0" startX="623.0" startY="599.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="587.0" endY="536.0" layoutX="103.0" layoutY="52.0" startX="613.6666870117188" startY="624.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="625.0" endY="427.3333740234375" layoutX="157.0" layoutY="-46.0" startX="533.0" startY="634.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="565.0" endY="315.3333740234375" layoutX="167.0" layoutY="-36.0" startX="615.0" startY="418.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="337.0" endY="340.0" layoutX="177.0" layoutY="-26.0" startX="554.3333129882812" startY="302.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="285.6666564941406" endY="410.0" layoutX="187.0" layoutY="-16.0" startX="327.66668701171875" startY="331.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="329.66668701171875" endY="511.3333740234375" layoutX="197.0" layoutY="-6.0" startX="275.0" startY="400.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="327.0" endY="560.0" layoutX="207.0" layoutY="4.0" startX="319.66668701171875" startY="502.0" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="255.0" endY="891.3333740234375" layoutX="171.0" layoutY="64.0" startX="363.66668701171875" startY="500.6666259765625" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+                  <Line endX="243.0" endY="883.3333740234375" layoutX="181.0" layoutY="74.0" startX="194.33334350585938" startY="899.3333740234375" stroke="#abb2ad" strokeLineCap="ROUND" strokeWidth="4.0" />
+               </children>
+            </Group>
          </children>
       </Group>
       <ProgressBar fx:id="throttlePB" layoutX="850.0" layoutY="745.0" prefHeight="36.0" prefWidth="74.0" progress="0.0" rotate="-90.0" />
