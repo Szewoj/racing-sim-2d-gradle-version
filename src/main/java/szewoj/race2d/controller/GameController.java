@@ -68,7 +68,7 @@ public class GameController {
         mainViewManager.setTireChangeProgress( tireChangeProgress.getPercent() );
 
         mainViewManager.updateHitboxes();
-        mainViewManager.checkAllBarrierCollisions();
+        raceCarModel.addCollision(mainViewManager.getBarrierCollisionVector());
 
     }
 

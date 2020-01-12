@@ -20,9 +20,9 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
+import szewoj.race2d.utilities.Vector2d;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 
 public class ViewManager {
@@ -30,6 +30,7 @@ public class ViewManager {
     private Rotate rpmPosition;
     private ArrayList<Label> recentTimes;
     private ArrayList<Label> differences;
+    private ArrayList<Line> barriers;
 
     @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB, pitstopTiresPB, pitstopFuelPB;
     @FXML private Button fuelButton, tiresButton;
@@ -42,13 +43,17 @@ public class ViewManager {
     @FXML private Rectangle carHitbox;
     @FXML private TitledPane pitstopPane;
     @FXML private Rectangle pitstopHitbox;
-    @FXML private Line barrier1;
     @FXML private Line start, checkpoint1, checkpoint2;
+    @FXML private Line barrier1, barrier2, barrier3, barrier4, barrier5, barrier6, barrier7, barrier8, barrier9, barrier10,
+                        barrier11, barrier12, barrier13, barrier14, barrier15, barrier16, barrier17, barrier18, barrier19, barrier20,
+                        barrier21, barrier22, barrier23, barrier24, barrier25, barrier26, barrier27, barrier28, barrier29, barrier30,
+                        barrier31, barrier32, barrier33, barrier34, barrier35, barrier36, barrier37, barrier38, barrier39, barrier40;
 
     public ViewManager() {
         rpmPosition = new Rotate( -90, -40, 40 );
         recentTimes = new ArrayList<Label>();
         differences = new ArrayList<Label>();
+        barriers = new ArrayList<Line>();
     }
 
     @FXML
@@ -65,6 +70,8 @@ public class ViewManager {
         differences.add( difference1 );
         differences.add( difference2 );
         differences.add( difference3 );
+
+        initBarriers();
     }
 
     public static Point2D convertPoint(Node source, Node target, Point2D point ){
@@ -237,7 +244,7 @@ public class ViewManager {
             if( time < 0 )
                 differences.get(i).setText("");
             else
-                differences.get(i).setText( differenceToString( best - time ) );
+                differences.get(i).setText( differenceToString( time - best ) );
         }
     }
 
@@ -250,9 +257,25 @@ public class ViewManager {
     }
 
     @FXML
-    public void checkAllBarrierCollisions(){
-        //Point2D test = convertPoint( carGroup, trackSprite, new Point2D(0, 0));
-        //System.out.println( test.getX() + " " + test.getY() );
+    public Vector2d getBarrierCollisionVector(){
+        Vector2d out = new Vector2d(0, 0);
+
+        Shape intersect = null;
+        for(Line barrier : barriers ){
+            intersect = Shape.intersect( barrier, carHitbox );
+            if(intersect.getBoundsInLocal().getWidth() != -1)
+                break;
+            else
+                intersect = null;
+        }
+        if(intersect != null){
+            Point2D intersectCenter = new Point2D( intersect.getBoundsInLocal().getCenterX(), intersect.getBoundsInLocal().getCenterY());
+            Point2D carCenter = convertPoint(carHitbox, intersect, new Point2D( carHitbox.getBoundsInLocal().getCenterX(), carHitbox.getBoundsInLocal().getCenterY()));
+
+            out.setX( carCenter.getX() - intersectCenter.getX() );
+            out.setY( carCenter.getY() - intersectCenter.getY() );
+        }
+        return out;
     }
 
     @FXML
@@ -297,4 +320,47 @@ public class ViewManager {
         return tiresButton.isPressed();
     }
 
+    @FXML
+    private void initBarriers(){
+        barriers.add(barrier1);
+        barriers.add(barrier2);
+        barriers.add(barrier3);
+        barriers.add(barrier4);
+        barriers.add(barrier5);
+        barriers.add(barrier6);
+        barriers.add(barrier7);
+        barriers.add(barrier8);
+        barriers.add(barrier9);
+        barriers.add(barrier10);
+        barriers.add(barrier11);
+        barriers.add(barrier12);
+        barriers.add(barrier13);
+        barriers.add(barrier14);
+        barriers.add(barrier15);
+        barriers.add(barrier16);
+        barriers.add(barrier17);
+        barriers.add(barrier18);
+        barriers.add(barrier19);
+        barriers.add(barrier20);
+        barriers.add(barrier21);
+        barriers.add(barrier22);
+        barriers.add(barrier23);
+        barriers.add(barrier24);
+        barriers.add(barrier25);
+        barriers.add(barrier26);
+        barriers.add(barrier27);
+        barriers.add(barrier28);
+        barriers.add(barrier29);
+        barriers.add(barrier30);
+        barriers.add(barrier31);
+        barriers.add(barrier32);
+        barriers.add(barrier33);
+        barriers.add(barrier34);
+        barriers.add(barrier35);
+        barriers.add(barrier36);
+        barriers.add(barrier37);
+        barriers.add(barrier38);
+        barriers.add(barrier39);
+        barriers.add(barrier40);
+    }
 }

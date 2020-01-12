@@ -34,6 +34,7 @@ public class LapTimer {
                 long diff = now - currentLapStart;
                 finishedLapTime = diff;
                 ready = true;
+                currentLapStart = System.currentTimeMillis();
                 ++activatedCheckpoint;
             } else {
                 ++activatedCheckpoint;

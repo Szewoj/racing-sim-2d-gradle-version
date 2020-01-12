@@ -134,6 +134,16 @@ public class Vehicle {
             yawRate = 0;
     }
 
+    public void addCollision( Vector2d collision ){
+        collision.setY( -collision.getY() / 17 );
+        collision.setX( collision.getX() / 17 );
+
+        double strength = (1 - collision.length()/5.20);
+
+        velocity.setX( velocity.getX() + 5* strength*collision.getX() );
+        velocity.setY( velocity.getY() + 2* strength*collision.getY() );
+    }
+
     public void calculateTransformation( Translate translation, Rotate turn,  Rotate rotation ){
         Vector2d airDrag = new Vector2d();
         double rollRes;
@@ -258,7 +268,7 @@ public class Vehicle {
             frontWheels.setRotationSpeed( velocity.getY()/Wheel.RADIUS );
         }
 
-        if( Math.abs(velocity.getY()) > 15 ){
+        if( Math.abs(velocity.getY()) > 14 ){
 
             yawRate += yawTorque / momentOfInteria * TIME_CONST;
 
