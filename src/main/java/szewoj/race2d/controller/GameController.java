@@ -18,7 +18,6 @@ public class GameController {
     private Translate memTrans;
     private Rotate memRot;
     private Rotate memTurn;
-    private Rotate rpmPosition;
 
     public GameController(ViewManager view ){
         input = new ArrayList<String>();
@@ -52,7 +51,8 @@ public class GameController {
         mainViewManager.displaySpeed(raceCarModel.getSpeed());
         mainViewManager.setGearDisplay(raceCarModel.getGear());
         mainViewManager.setRpmPosition( raceCarModel.getRpm() );
-        mainViewManager.setFuelGaugeProgress( raceCarModel.getFuel() );
+        mainViewManager.setFuelProgress( raceCarModel.getFuel() );
+        mainViewManager.setTireDurabilityProgress(raceCarModel.getFrontWheelDurability(),raceCarModel.getFrontWheelDurability(),raceCarModel.getRearWheelDurability(),raceCarModel.getRearWheelDurability());
 
         mainViewManager.updateHitboxes();
         mainViewManager.checkAllBarrierCollisions();

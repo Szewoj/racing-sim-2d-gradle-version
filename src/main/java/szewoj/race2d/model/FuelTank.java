@@ -6,6 +6,7 @@ public class FuelTank {
     public static final double FUEL_DENSITY = 0.75; /**in kg/l*/
 
     private final double FUEL_CONSUMPTION_RATE = 1.0 / 4800000;
+    private final double REFUEL_SPEED = 1.0/6;
     private final double MAX_VOLUME;/**in litres*/
 
     private double volume;/**in litres*/
@@ -38,6 +39,13 @@ public class FuelTank {
             volume -= consumedFuel;
         else if( volume > 0 )
             volume = 0;
+    }
+
+    public void refuel(){
+        if( MAX_VOLUME - volume < REFUEL_SPEED )
+            volume = MAX_VOLUME;
+        else
+            volume += REFUEL_SPEED;
     }
 
 }

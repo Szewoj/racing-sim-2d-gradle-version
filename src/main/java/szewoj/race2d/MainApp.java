@@ -9,9 +9,6 @@ import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
 import szewoj.race2d.view.ViewManager;
 
-import java.io.IOException;
-
-
 public class MainApp extends Application {
 
     @Override

@@ -117,6 +117,14 @@ public class Vehicle {
         return fuelTank.getPercent();
     }
 
+    public double getFrontWheelDurability(){
+        return frontWheels.getDurability();
+    }
+
+    public double getRearWheelDurability(){
+        return rearWheels.getDurability();
+    }
+
     private void roundVariablesToZero(){
         if(Math.abs(velocity.getX()) < 0.01)
             velocity.setX( 0 );
@@ -199,8 +207,8 @@ public class Vehicle {
                 frontLongitudinalSlipRatio = -0.05;
 
             //Calculating lateral forces:
-            frontLateralForce = -24 * frontEffectiveWeight * Math.tan(frontSlipAngle) /(1+10*Math.abs(frontLongitudinalSlipRatio));
-            rearLateralForce = -24  * rearEffectiveWeight * Math.tan(rearSlipAngle) /(1+10*Math.abs(rearLongitudinalSlipRatio));
+            frontLateralForce = -24 * frontEffectiveWeight * Math.tan(frontSlipAngle) * frontWheels.getTraction() / (1+10*Math.abs(frontLongitudinalSlipRatio));
+            rearLateralForce = -24  * rearEffectiveWeight * Math.tan(rearSlipAngle) * rearWheels.getTraction() / (1+10*Math.abs(rearLongitudinalSlipRatio));
 
             corneringForce = rearLateralForce + Math.cos(steeringAngle) * frontLateralForce + airDrag.getX();
 
@@ -218,8 +226,8 @@ public class Vehicle {
             else
                 frontBrakingTorque = (frontWheels.getRotationSpeed() / 0.05) * BR_CONST * brake.getPercent();
 
-            rearTractiveForce = 10* rearLongitudinalSlipRatio * rearEffectiveWeight;
-            frontTractiveForce = 10* frontLongitudinalSlipRatio * frontEffectiveWeight;
+            rearTractiveForce = 10* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
+            frontTractiveForce = 10* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
 
             resultantForce = rearTractiveForce + frontTractiveForce + rollRes + airDrag.getY();
 
@@ -229,6 +237,8 @@ public class Vehicle {
             rearWheels.increaseRotationSpeed(-rearResultantTorque * Vehicle.TIME_CONST / Wheel.INERTIA);
             frontWheels.increaseRotationSpeed(-frontResultantTorque * Vehicle.TIME_CONST / Wheel.INERTIA);
 
+            frontWheels.degradeTire( frontLongitudinalSlipRatio, frontSlipAngle );
+            rearWheels.degradeTire( rearLongitudinalSlipRatio, rearSlipAngle );
         } else {
 
             if( abs(velocity.getY()) > 0.1 )

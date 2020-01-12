@@ -1,5 +1,6 @@
 package szewoj.race2d.model;
 
+import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.utilities.Vector2d;
 
 public class Wheel {
@@ -7,13 +8,17 @@ public class Wheel {
     public static final boolean REAR = false;
     public static final double RADIUS = 0.4572;
     public static final double INERTIA = 60;
+    private final double DEGRADATION_RATIO = 1.0/2000;
     private double rotationSpeed;
     private final boolean wheelType;
+    private Percent durability;
     private Vector2d position;
 
     public Wheel( boolean type, double positionX, double positionY ){
         this.wheelType = type;
         this.rotationSpeed = 0;
+        durability = new Percent();
+        durability.setPercent( 1 );
         this.position = new Vector2d( positionX, positionY );
     }
 
@@ -29,6 +34,10 @@ public class Wheel {
         return this.rotationSpeed;
     }
 
+    public double getDurability(){
+        return durability.getPercent();
+    }
+
     public double getSlipRatio( double longitudinalVelocity ){
 
         if(Math.abs(longitudinalVelocity) == 0 )
@@ -38,6 +47,7 @@ public class Wheel {
     }
 
     public double getSlipAngle( Vector2d velocity, double carRotationSpeed, double steeringAngle ){
+        double slipAngle;
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
 
@@ -52,6 +62,18 @@ public class Wheel {
             return 0;
 
         return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(this.position.getY()) / velocity.getY() );
+    }
+
+    public void degradeTire( double slipRatio, double slipAngle ){
+        durability.setPercent( durability.getPercent() - ( Math.abs(slipRatio) + Math.abs(slipAngle) ) * DEGRADATION_RATIO );
+    }
+
+    public double getTraction(){
+        return 0.6 + 0.4 * durability.getPercent();
+    }
+
+    public void switchTire(){
+        durability.setPercent(1);
     }
 
 }

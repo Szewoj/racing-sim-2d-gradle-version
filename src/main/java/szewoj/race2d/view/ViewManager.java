@@ -21,7 +21,7 @@ public class ViewManager {
 
     private Rotate rpmPosition;
 
-    @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelGauge;
+    @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB;
     @FXML private ImageView trackSprite, carSprite;
     @FXML private Group trackGroup, carGroup;
     @FXML private Label speedTxt, gearDisplay;
@@ -101,12 +101,12 @@ public class ViewManager {
         }
     }
     @FXML
-    public void setFuelGaugeProgress( double fuel ){
-        fuelGauge.setProgress( fuel );
+    public void setFuelProgress(double fuel ){
+        fuelPB.setProgress( fuel );
         if( fuel < 0.3 )
-            fuelGauge.setStyle("-fx-accent: RED");
+            fuelPB.setStyle("-fx-accent: RED");
         else
-            fuelGauge.setStyle("-fx-accent: BLACK");
+            fuelPB.setStyle("-fx-accent: BLACK");
     }
 
     @FXML
@@ -150,6 +150,14 @@ public class ViewManager {
     @FXML
     public void displaySpeed( int speed ){
         speedTxt.setText( Math.abs(speed) + "" );
+    }
+
+    @FXML
+    public void setTireDurabilityProgress( double leftFront, double rightFront, double leftRear, double rightRear ){
+        LFTirePB.setProgress(leftFront);
+        RFTirePB.setProgress(rightFront);
+        LRTirePB.setProgress(leftRear);
+        RRTirePB.setProgress(rightRear);
     }
 
     @FXML
