@@ -14,7 +14,7 @@ public class Vehicle {
     private static final double AR_CONST = 0.2;
     private static final double RR_CONST = 8.4;
     private static final double TIME_CONST = 1.0/60;
-    private static final double BR_CONST = 4800;
+    private static final double BR_CONST = 10000;
     private static final double MASS_CONST = 1420;
     private static final double WIDTH = 2;
     private static final double LENGTH = 4.5;
@@ -236,8 +236,8 @@ public class Vehicle {
             else
                 frontBrakingTorque = (frontWheels.getRotationSpeed() / 0.05) * BR_CONST * brake.getPercent();
 
-            rearTractiveForce = 10* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
-            frontTractiveForce = 10* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
+            rearTractiveForce = 18* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
+            frontTractiveForce = 18* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
 
             resultantForce = rearTractiveForce + frontTractiveForce + rollRes + airDrag.getY();
 
@@ -264,8 +264,8 @@ public class Vehicle {
             rearResultantTorque = driveTorque + engineBrakingTorque + rearBrakingTorque;
             frontResultantTorque = frontBrakingTorque;
             resultantForce = -(rearResultantTorque + frontResultantTorque)/Wheel.RADIUS + rollRes + airDrag.getY() ;
-            rearWheels.setRotationSpeed( 1.5*velocity.getY()/Wheel.RADIUS );
-            frontWheels.setRotationSpeed( velocity.getY()/Wheel.RADIUS );
+            rearWheels.setRotationSpeed( 2*velocity.getY()/Wheel.RADIUS );
+            frontWheels.setRotationSpeed( 2*velocity.getY()/Wheel.RADIUS );
         }
 
         if( Math.abs(velocity.getY()) > 14 ){

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +24,9 @@ import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
 import szewoj.race2d.utilities.Vector2d;
 
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -32,6 +36,7 @@ public class ViewManager {
     private ArrayList<Label> recentTimes;
     private ArrayList<Label> differences;
     private ArrayList<Line> barriers;
+    private Image trackMask;
 
     @FXML private AnchorPane homeScreen;
     @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB, pitstopTiresPB, pitstopFuelPB;
@@ -56,6 +61,7 @@ public class ViewManager {
         recentTimes = new ArrayList<Label>();
         differences = new ArrayList<Label>();
         barriers = new ArrayList<Line>();
+        trackMask = new Image("/mask.png");
     }
 
     @FXML
