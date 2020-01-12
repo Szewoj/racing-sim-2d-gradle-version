@@ -65,7 +65,7 @@ public class Wheel {
     }
 
     public void degradeTire( double slipRatio, double slipAngle ){
-        durability.setPercent( durability.getPercent() - ( Math.abs(slipRatio) + Math.abs(slipAngle) ) * DEGRADATION_RATIO );
+        durability.addPercent(- ( Math.abs(slipRatio) + Math.abs(slipAngle) ) * DEGRADATION_RATIO );
     }
 
     public double getTraction(){

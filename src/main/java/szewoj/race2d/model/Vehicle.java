@@ -258,7 +258,7 @@ public class Vehicle {
             frontWheels.setRotationSpeed( velocity.getY()/Wheel.RADIUS );
         }
 
-        if( Math.abs(velocity.getY()) > 15 ){
+        if( Math.abs(velocity.getY()) > 12 ){
 
             yawRate += yawTorque / momentOfInteria * TIME_CONST;
 
@@ -302,7 +302,7 @@ public class Vehicle {
 
         } else {
             if( steeringAngle != 0 ){
-                double turnRadius = - (LENGTH - 0.5) / Math.sin( steeringAngle );
+                double turnRadius = - (LENGTH) / Math.sin( steeringAngle );
 
                 yawRate = velocity.getY() / turnRadius;
 
@@ -347,6 +347,15 @@ public class Vehicle {
 
     public void downShiftReady() {
         this.gearbox.downShiftReady();
+    }
+
+    public void refuel(){
+        fuelTank.refuel();
+    }
+
+    public void changeTires(){
+        frontWheels.switchTire();
+        rearWheels.switchTire();
     }
 
 }

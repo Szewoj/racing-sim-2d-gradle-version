@@ -1,14 +1,17 @@
 package szewoj.race2d.view;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -16,12 +19,14 @@ import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
+import szewoj.race2d.controller.GameController;
 
 public class ViewManager {
 
     private Rotate rpmPosition;
 
-    @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB;
+    @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB, pitstopTiresPB, pitstopFuelPB;
+    @FXML private Button fuelButton, tiresButton;
     @FXML private ImageView trackSprite, carSprite;
     @FXML private Group trackGroup, carGroup;
     @FXML private Label speedTxt, gearDisplay;
@@ -102,11 +107,20 @@ public class ViewManager {
     }
     @FXML
     public void setFuelProgress(double fuel ){
+        if( pitstopPane.isVisible() )
+            pitstopFuelPB.setProgress( fuel );
+
         fuelPB.setProgress( fuel );
         if( fuel < 0.3 )
             fuelPB.setStyle("-fx-accent: RED");
         else
             fuelPB.setStyle("-fx-accent: BLACK");
+    }
+
+    @FXML
+    public void setTireChangeProgress( double progress ){
+        if( pitstopPane.isVisible() )
+            pitstopTiresPB.setProgress( progress );
     }
 
     @FXML
@@ -171,6 +185,37 @@ public class ViewManager {
     @FXML
     public void checkAllBarrierCollisions(){
 
+    }
+
+    @FXML
+    public void setupKeyListeners(GameController controller){
+        getStage().getScene().setOnKeyPressed(
+                new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent e) {
+                        controller.onKeyPressedHandle( e );
+                    }
+                }
+        );
+        getStage().getScene().setOnKeyReleased(
+                new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent e) {
+                        controller.onKeyReleasedHandle( e );
+                    }
+                }
+        );
 
     }
+
+    @FXML
+    public boolean isFuelButtonPressed(){
+        return fuelButton.isPressed();
+    }
+
+    @FXML
+    public boolean isTiresButtonPressed(){
+        return tiresButton.isPressed();
+    }
+
 }
