@@ -3,11 +3,13 @@ package szewoj.race2d.controller;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
+import szewoj.race2d.model.LapTimer;
 import szewoj.race2d.model.Vehicle;
 import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.view.ViewManager;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GameController {
 
@@ -18,6 +20,9 @@ public class GameController {
     private Rotate memRot;
     private Rotate memTurn;
     private Percent tireChangeProgress;
+    private LapTimer timer;
+    private LinkedList<Long> recentTimes;
+    private long bestTime;
 
     public GameController(ViewManager view ){
         input = new ArrayList<String>();
@@ -28,12 +33,18 @@ public class GameController {
         memTurn = new Rotate( 0 );
         tireChangeProgress = new Percent();
         mainViewManager.setupKeyListeners( this );
-
+        timer = new LapTimer(3);
+        recentTimes = new LinkedList<Long>();
+        recentTimes.add(-1L);
+        recentTimes.add(-1L);
+        recentTimes.add(-1L);
+        bestTime = -1;
     }
 
     public void refresh(){
         raceCarModel.updateInputs(input);
         handleButtonInputs();
+        handleLapTimes();
         mainViewManager.setThrottleProgress(raceCarModel.getThrottle());
         mainViewManager.setBrakeProgress(raceCarModel.getBrake());
         mainViewManager.setSteeringProgress(raceCarModel.getSteering());
@@ -58,6 +69,7 @@ public class GameController {
 
         mainViewManager.updateHitboxes();
         mainViewManager.checkAllBarrierCollisions();
+
     }
 
     public void onKeyPressedHandle(KeyEvent e){
@@ -96,6 +108,22 @@ public class GameController {
 
         }else{
             tireChangeProgress.setPercent( 0 );
+        }
+    }
+
+    public void handleLapTimes(){
+        mainViewManager.displayTimes( timer.getCurrentLapTime(), bestTime, recentTimes );
+
+        int cpIndex = mainViewManager.getCrossedCheckpoint();
+        if( cpIndex > -1 ){
+            timer.checkpointCrossed(cpIndex);
+            if(timer.isReady()){
+                long newTime = timer.getFinishedLapTime();
+                recentTimes.addFirst(newTime);
+                recentTimes.removeLast();
+                if(newTime < bestTime | bestTime < 0)
+                    bestTime = newTime;
+            }
         }
     }
 

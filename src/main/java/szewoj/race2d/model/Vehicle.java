@@ -258,7 +258,7 @@ public class Vehicle {
             frontWheels.setRotationSpeed( velocity.getY()/Wheel.RADIUS );
         }
 
-        if( Math.abs(velocity.getY()) > 12 ){
+        if( Math.abs(velocity.getY()) > 15 ){
 
             yawRate += yawTorque / momentOfInteria * TIME_CONST;
 

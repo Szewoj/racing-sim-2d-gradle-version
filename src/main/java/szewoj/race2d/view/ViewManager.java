@@ -21,23 +21,34 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+
 public class ViewManager {
 
     private Rotate rpmPosition;
+    private ArrayList<Label> recentTimes;
+    private ArrayList<Label> differences;
 
     @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB, pitstopTiresPB, pitstopFuelPB;
     @FXML private Button fuelButton, tiresButton;
     @FXML private ImageView trackSprite, carSprite;
     @FXML private Group trackGroup, carGroup;
     @FXML private Label speedTxt, gearDisplay;
+    @FXML private Label currentTime, bestTime, recentTime1, recentTime2, recentTime3;
+    @FXML private Label difference1, difference2, difference3;
     @FXML private Polygon rpmMeter;
     @FXML private Rectangle carHitbox;
     @FXML private TitledPane pitstopPane;
     @FXML private Rectangle pitstopHitbox;
-    @FXML private Line barier1;
+    @FXML private Line barrier1;
+    @FXML private Line start, checkpoint1, checkpoint2;
 
     public ViewManager() {
         rpmPosition = new Rotate( -90, -40, 40 );
+        recentTimes = new ArrayList<Label>();
+        differences = new ArrayList<Label>();
     }
 
     @FXML
@@ -46,6 +57,14 @@ public class ViewManager {
         trackSprite.setCache(true);
         trackSprite.setCacheHint( CacheHint.SPEED );
         rpmMeter.getTransforms().add(rpmPosition);
+
+        recentTimes.add( recentTime1 );
+        recentTimes.add( recentTime2 );
+        recentTimes.add( recentTime3 );
+
+        differences.add( difference1 );
+        differences.add( difference2 );
+        differences.add( difference3 );
     }
 
     public static Point2D convertPoint(Node source, Node target, Point2D point ){
@@ -62,15 +81,49 @@ public class ViewManager {
         return newRotate;
     }
 
-    public boolean checkCollision(Shape shape1, Shape shape2 ){
+    public static boolean checkCollision(Shape shape1, Shape shape2 ){
         Shape intersect = Shape.intersect(shape1, shape2 );
         return intersect.getBoundsInLocal().getWidth() != -1;
     }
 
+    public static String timeToString( long time ){
+        if( time < 0 )
+            return "";
+
+        int minutes = (int)(time/60000);
+        time -= 60000 * minutes;
+        int seconds = (int)(time/1000);
+        time -= 1000 * seconds;
+        int miliseconds = (int)time;
+
+        return minutes + ":" + seconds + "." + miliseconds;
+    }
+
+    public static String differenceToString( long difference ){
+        String sign;
+
+        if( difference >= 0)
+            sign = "+";
+        else
+            sign = "-";
+
+        difference = Math.abs(difference);
+
+        int minutes = (int)(difference/60000);
+        difference -= 60000 * minutes;
+        int seconds = (int)(difference/1000);
+        difference -= 1000 * seconds;
+        int miliseconds = (int)difference;
+
+        return sign + minutes + ":" + seconds + "." + miliseconds;
+    }
+
+    @FXML
     public void setRpmPosition( double rpm ){
         this.rpmPosition.setAngle( 135*rpm/7000 - 109.28 );
     }
 
+    @FXML
     public void setGearDisplay( int gear ){
         if( gear > 0 )
             gearDisplay.setText( gear + "" );
@@ -115,6 +168,14 @@ public class ViewManager {
             fuelPB.setStyle("-fx-accent: RED");
         else
             fuelPB.setStyle("-fx-accent: BLACK");
+    }
+
+    @FXML
+    public void setTireDurabilityProgress( double leftFront, double rightFront, double leftRear, double rightRear ){
+        LFTirePB.setProgress(leftFront);
+        RFTirePB.setProgress(rightFront);
+        LRTirePB.setProgress(leftRear);
+        RRTirePB.setProgress(rightRear);
     }
 
     @FXML
@@ -167,11 +228,17 @@ public class ViewManager {
     }
 
     @FXML
-    public void setTireDurabilityProgress( double leftFront, double rightFront, double leftRear, double rightRear ){
-        LFTirePB.setProgress(leftFront);
-        RFTirePB.setProgress(rightFront);
-        LRTirePB.setProgress(leftRear);
-        RRTirePB.setProgress(rightRear);
+    public void displayTimes( long current, long best, LinkedList<Long> recent){
+        currentTime.setText( timeToString(current) );
+        bestTime.setText( timeToString(best) );
+        for( int i = 0; i < 3; ++i ){
+            long time = recent.get(i);
+            recentTimes.get(i).setText( timeToString(time) );
+            if( time < 0 )
+                differences.get(i).setText("");
+            else
+                differences.get(i).setText( differenceToString( best - time ) );
+        }
     }
 
     @FXML
@@ -184,7 +251,19 @@ public class ViewManager {
 
     @FXML
     public void checkAllBarrierCollisions(){
+        //Point2D test = convertPoint( carGroup, trackSprite, new Point2D(0, 0));
+        //System.out.println( test.getX() + " " + test.getY() );
+    }
 
+    @FXML
+    public int getCrossedCheckpoint(){
+        if(checkCollision(carHitbox, start))
+            return 0;
+        if(checkCollision(carHitbox, checkpoint1))
+            return 1;
+        if(checkCollision(carHitbox, checkpoint2))
+            return 2;
+        return-1;
     }
 
     @FXML
