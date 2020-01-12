@@ -113,13 +113,33 @@
             <ProgressBar prefHeight="28.0" prefWidth="44.0" progress="1.0" style="-fx-accent: BLACK;" GridPane.rowIndex="1" />
          </children>
       </GridPane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#464646" height="38.0" layoutX="1011.0" layoutY="762.0" stroke="BLACK" strokeType="INSIDE" width="124.0" />
       <Circle fill="#464646" layoutX="1180.0" layoutY="714.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label fx:id="speedTxt" layoutX="1162.0" layoutY="726.0" prefHeight="39.0" prefWidth="36.0" text="000" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="32.0" layoutX="1156.0" layoutY="728.0" stroke="BLACK" strokeType="INSIDE" width="43.0">
+         <fill>
+            <LinearGradient cycleMethod="REPEAT" endX="0.5048076923076923" endY="0.45192307692307687" proportional="false" startX="0.5528846153846154" startY="0.4567307692307692">
+               <stops>
+                  <Stop color="#2c2c2c" />
+                  <Stop color="#404040" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Label fx:id="speedTxt" layoutX="1162.0" layoutY="726.0" prefHeight="39.0" prefWidth="36.0" text="000">
          <font>
             <Font name="Garuda" size="20.0" />
          </font>
+         <textFill>
+            <LinearGradient cycleMethod="REPEAT" endX="0.4855769230769231" endY="0.5721153846153846" proportional="false" startX="0.46634615384615385" startY="0.4807692307692307">
+               <stops>
+                  <Stop color="#d90005" />
+                  <Stop color="#9e0101" offset="0.9222222222222223" />
+                  <Stop color="#9e0101" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
       </Label>
-      <Label layoutX="1158.0" layoutY="756.0" prefHeight="39.0" prefWidth="44.0" text="km/h" textAlignment="RIGHT" textFill="WHITE">
+      <Label layoutX="1158.0" layoutY="756.0" prefHeight="39.0" prefWidth="44.0" text="km/h" textAlignment="RIGHT" textFill="#b9b9b9">
          <font>
             <Font name="Garuda" size="20.0" />
          </font>
@@ -157,7 +177,19 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <TitledPane fx:id="pitstopPane" collapsible="false" focusTraversable="false" layoutX="896.0" layoutY="250.0" prefHeight="299.0" prefWidth="369.0" text="Pitstop options" visible="false">
+      <Label layoutX="1067.0" layoutY="774.0" text="F" textFill="#e4e4e4">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="1030.0" layoutY="778.0" text="FUEL" textFill="#b9b9b9" />
+      <Label layoutX="1012.0" layoutY="774.0" text="E" textFill="RED">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="fuelGauge" layoutX="1012.0" layoutY="752.0" prefHeight="23.0" prefWidth="68.0" progress="0.85" style="-fx-accent: BLACK;" />
+      <TitledPane fx:id="pitstopPane" collapsible="false" focusTraversable="false" layoutX="896.0" layoutY="250.0" pickOnBounds="false" prefHeight="299.0" prefWidth="369.0" text="Pitstop options">
          <content>
             <VBox prefHeight="250.0" prefWidth="367.0">
                <children>

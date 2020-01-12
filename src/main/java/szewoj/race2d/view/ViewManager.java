@@ -21,20 +21,14 @@ public class ViewManager {
 
     private Rotate rpmPosition;
 
-    @FXML private ProgressBar steerLeftPB;
-    @FXML private ProgressBar steerRightPB;
-    @FXML private ProgressBar throttlePB;
-    @FXML private ProgressBar brakePB;
-    @FXML private ImageView trackSprite;
-    @FXML private ImageView carSprite;
-    @FXML private Label speedTxt;
+    @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelGauge;
+    @FXML private ImageView trackSprite, carSprite;
+    @FXML private Group trackGroup, carGroup;
+    @FXML private Label speedTxt, gearDisplay;
     @FXML private Polygon rpmMeter;
-    @FXML private Group trackGroup;
-    @FXML private Group carGroup;
     @FXML private Rectangle carHitbox;
     @FXML private TitledPane pitstopPane;
     @FXML private Rectangle pitstopHitbox;
-    @FXML private Label gearDisplay;
     @FXML private Line barier1;
 
     public ViewManager() {
@@ -106,6 +100,14 @@ public class ViewManager {
             steerRightPB.setProgress(0);
         }
     }
+    @FXML
+    public void setFuelGaugeProgress( double fuel ){
+        fuelGauge.setProgress( fuel );
+        if( fuel < 0.3 )
+            fuelGauge.setStyle("-fx-accent: RED");
+        else
+            fuelGauge.setStyle("-fx-accent: BLACK");
+    }
 
     @FXML
     public void applyCarTransforms(Translate translation, Rotate turning, Rotate rotation ){
@@ -160,7 +162,7 @@ public class ViewManager {
 
     @FXML
     public void checkAllBarrierCollisions(){
-        if( checkCollision(carHitbox, barier1))
-            System.out.println("collides");
+
+
     }
 }

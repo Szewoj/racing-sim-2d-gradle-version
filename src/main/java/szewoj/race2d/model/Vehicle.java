@@ -22,6 +22,7 @@ public class Vehicle {
     private double yawRate;
     private Engine engine;
     private Gearbox gearbox;
+    private FuelTank fuelTank;
     private Wheel frontWheels;
     private Wheel rearWheels;
     private WeightTransfer weight;
@@ -45,6 +46,7 @@ public class Vehicle {
         brake = new Percent();
         steering = new Percent( -1, 1 );
         gearbox = new Gearbox();
+        fuelTank = new FuelTank( 54 );
         frontWheels = new Wheel(Wheel.FRONT, 0, 2.6);
         rearWheels = new Wheel(Wheel.REAR, 0, -1.4);
         weight = new WeightTransfer( MASS_CONST, 2.4, 0.5, 1.6 );
@@ -111,6 +113,19 @@ public class Vehicle {
 
     public int getGear(){ return gearbox.getGear(); }
 
+    public double getFuel(){
+        return fuelTank.getPercent();
+    }
+
+    private void roundVariablesToZero(){
+        if(Math.abs(velocity.getX()) < 0.01)
+            velocity.setX( 0 );
+        if(Math.abs(velocity.getY()) < 0.01)
+            velocity.setY( 0 );
+        if(Math.abs(yawRate) < 0.001)
+            yawRate = 0;
+    }
+
     public void calculateTransformation( Translate translation, Rotate turn,  Rotate rotation ){
         Vector2d airDrag = new Vector2d();
         double rollRes;
@@ -133,7 +148,7 @@ public class Vehicle {
         double yawTorque = 0;
         double steeringAngle = Math.toRadians( -45 * steering.getPercent() );
 
-        weight.setMass( Vehicle.MASS_CONST + 0/*fuel mass*/ );
+        weight.setMass( Vehicle.MASS_CONST + fuelTank.getMass() );
         momentOfInteria = weight.getMass() * ( ( WIDTH*WIDTH + LENGTH*LENGTH) / 12 + 1.6 * 1.6 );
 
         if( handbrake ) {
@@ -145,7 +160,10 @@ public class Vehicle {
 
         rollRes = -RR_CONST * velocity.getY();
 
-        driveTorque = -engine.getTorque() * gearbox.getGearRatio() * Gearbox.DIFF_RATIO * Gearbox.TRANS_EFF * throttle.getPercent();
+        if( fuelTank.isEmpty() )
+            driveTorque = 0;
+        else
+            driveTorque = -engine.getTorque() * gearbox.getGearRatio() * Gearbox.DIFF_RATIO * Gearbox.TRANS_EFF * throttle.getPercent();
 
         engineBrakingTorque =  -engine.getEngineBraking() * gearbox.getGearRatio() * Gearbox.DIFF_RATIO * Gearbox.TRANS_EFF * (1 - throttle.getPercent());
 
@@ -299,6 +317,10 @@ public class Vehicle {
             engine.setRpm(rearWheels.getRotationSpeed() * gearbox.getGearRatio() * Gearbox.DIFF_RATIO * 60 / (2 * Math.PI));
         else
             engine.setNeutralGearRpm( throttle.getPercent() );
+
+        fuelTank.consumeFuel( engine.getRpm(), throttle.getPercent() );
+
+        roundVariablesToZero();
 
         //System.out.print( (int)( 3.6 * frontWheels.getRotationSpeed()*Wheel.RADIUS) + " " + (int)( 3.6 * rearWheels.getRotationSpeed()*Wheel.RADIUS) + " " + (int)(resultantForce) + " " + (int)(rearTractiveForce) + " " + (int)(frontTractiveForce) + " " + (int)(rearResultantTorque) + " " + (int)(frontResultantTorque) + " " + (int)(rollRes) + " " + (int)(airDrag.getY()) + " " + (int)(rearTractiveForce)+ " \n");
         //System.out.println( ( velocity.getY() ) + " " + ( velocity.getX() ) + " " + (yawAngularSpeed) );

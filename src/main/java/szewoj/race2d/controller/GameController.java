@@ -28,7 +28,7 @@ public class GameController {
         memRot = new Rotate( 0 );
         memTurn = new Rotate( 0 );
 
-        this.setupListeners( view.getStage() );
+        this.setupKeyListeners( view.getStage() );
 
     }
 
@@ -52,13 +52,14 @@ public class GameController {
         mainViewManager.displaySpeed(raceCarModel.getSpeed());
         mainViewManager.setGearDisplay(raceCarModel.getGear());
         mainViewManager.setRpmPosition( raceCarModel.getRpm() );
+        mainViewManager.setFuelGaugeProgress( raceCarModel.getFuel() );
 
         mainViewManager.updateHitboxes();
         mainViewManager.checkAllBarrierCollisions();
     }
 
 
-    public void setupListeners(Stage stage){
+    public void setupKeyListeners(Stage stage){
         stage.getScene().setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
                     @Override
