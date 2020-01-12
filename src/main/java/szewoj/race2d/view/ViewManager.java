@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -32,6 +33,7 @@ public class ViewManager {
     private ArrayList<Label> differences;
     private ArrayList<Line> barriers;
 
+    @FXML private AnchorPane homeScreen;
     @FXML private ProgressBar steerLeftPB, steerRightPB, throttlePB, brakePB, fuelPB, LFTirePB, RFTirePB, LRTirePB, RRTirePB, pitstopTiresPB, pitstopFuelPB;
     @FXML private Button fuelButton, tiresButton;
     @FXML private ImageView trackSprite, carSprite;
@@ -62,6 +64,8 @@ public class ViewManager {
         trackSprite.setCache(true);
         trackSprite.setCacheHint( CacheHint.SPEED );
         rpmMeter.getTransforms().add(rpmPosition);
+
+        homeScreen.setVisible(true);
 
         recentTimes.add( recentTime1 );
         recentTimes.add( recentTime2 );
@@ -318,6 +322,17 @@ public class ViewManager {
     @FXML
     public boolean isTiresButtonPressed(){
         return tiresButton.isPressed();
+    }
+
+    @FXML
+    public boolean isHomeScreenDisabled(){
+        return homeScreen.isDisabled();
+    }
+
+    @FXML
+    public void disableHomeScreen(){
+        homeScreen.setVisible(false);
+        homeScreen.setDisable(true);
     }
 
     @FXML

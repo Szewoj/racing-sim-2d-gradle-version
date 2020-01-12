@@ -252,5 +252,14 @@
             <Label layoutX="13.0" layoutY="-20.0" prefHeight="16.0" prefWidth="407.0" text="Current lap time:" textFill="WHITE" />
          </children>
       </Group>
+      <AnchorPane fx:id="homeScreen" visible="false">
+         <children>
+            <ImageView fitHeight="800.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../homepage.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

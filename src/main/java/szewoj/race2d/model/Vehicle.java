@@ -140,8 +140,8 @@ public class Vehicle {
 
         double strength = (1 - collision.length()/5.20);
 
-        velocity.setX( velocity.getX() + 5* strength*collision.getX() );
-        velocity.setY( velocity.getY() + 2* strength*collision.getY() );
+        velocity.setX( velocity.getX() * ( 1 + 2 * strength*collision.getX() ) + 0.5 * Math.signum(collision.getX()));
+        velocity.setY( velocity.getY() * ( 1 +  strength*collision.getY() ) + 0.5 * Math.signum(collision.getY()));
     }
 
     public void calculateTransformation( Translate translation, Rotate turn,  Rotate rotation ){

@@ -1,5 +1,6 @@
 package szewoj.race2d.controller;
 
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
@@ -42,34 +43,35 @@ public class GameController {
     }
 
     public void refresh(){
-        raceCarModel.updateInputs(input);
-        handleButtonInputs();
-        handleLapTimes();
-        mainViewManager.setThrottleProgress(raceCarModel.getThrottle());
-        mainViewManager.setBrakeProgress(raceCarModel.getBrake());
-        mainViewManager.setSteeringProgress(raceCarModel.getSteering());
+        if( mainViewManager.isHomeScreenDisabled() ) {
+            raceCarModel.updateInputs(input);
+            handleButtonInputs();
+            handleLapTimes();
+            mainViewManager.setThrottleProgress(raceCarModel.getThrottle());
+            mainViewManager.setBrakeProgress(raceCarModel.getBrake());
+            mainViewManager.setSteeringProgress(raceCarModel.getSteering());
 
-        mainViewManager.applyCarTransformsReversed( memTrans, memTurn, memRot );
-        mainViewManager.applyBackgroundTransformsAdjustedReversed( memTrans, memTurn, memRot );
+            mainViewManager.applyCarTransformsReversed(memTrans, memTurn, memRot);
+            mainViewManager.applyBackgroundTransformsAdjustedReversed(memTrans, memTurn, memRot);
 
-        memTrans = new Translate( 0, 0, 0 );
-        memTurn = new Rotate( 0 );
-        memRot = new Rotate( 0 );
+            memTrans = new Translate(0, 0, 0);
+            memTurn = new Rotate(0);
+            memRot = new Rotate(0);
 
-        raceCarModel.calculateTransformation( memTrans, memTurn, memRot );
+            raceCarModel.calculateTransformation(memTrans, memTurn, memRot);
 
-        mainViewManager.applyCarTransforms( memTrans, memTurn, memRot );
+            mainViewManager.applyCarTransforms(memTrans, memTurn, memRot);
 
-        mainViewManager.displaySpeed(raceCarModel.getSpeed());
-        mainViewManager.setGearDisplay(raceCarModel.getGear());
-        mainViewManager.setRpmPosition( raceCarModel.getRpm() );
-        mainViewManager.setFuelProgress( raceCarModel.getFuel() );
-        mainViewManager.setTireDurabilityProgress(raceCarModel.getFrontWheelDurability(),raceCarModel.getFrontWheelDurability(),raceCarModel.getRearWheelDurability(),raceCarModel.getRearWheelDurability());
-        mainViewManager.setTireChangeProgress( tireChangeProgress.getPercent() );
+            mainViewManager.displaySpeed(raceCarModel.getSpeed());
+            mainViewManager.setGearDisplay(raceCarModel.getGear());
+            mainViewManager.setRpmPosition(raceCarModel.getRpm());
+            mainViewManager.setFuelProgress(raceCarModel.getFuel());
+            mainViewManager.setTireDurabilityProgress(raceCarModel.getFrontWheelDurability(), raceCarModel.getFrontWheelDurability(), raceCarModel.getRearWheelDurability(), raceCarModel.getRearWheelDurability());
+            mainViewManager.setTireChangeProgress(tireChangeProgress.getPercent());
 
-        mainViewManager.updateHitboxes();
-        raceCarModel.addCollision(mainViewManager.getBarrierCollisionVector());
-
+            mainViewManager.updateHitboxes();
+            raceCarModel.addCollision(mainViewManager.getBarrierCollisionVector());
+        }
     }
 
     public void onKeyPressedHandle(KeyEvent e){
@@ -83,6 +85,9 @@ public class GameController {
 
         if( keyCode.equals("N") )
             raceCarModel.downShiftReady();
+
+        if( e.getCode().equals(KeyCode.ENTER) )
+            mainViewManager.disableHomeScreen();
     }
 
     public void onKeyReleasedHandle(KeyEvent e){
