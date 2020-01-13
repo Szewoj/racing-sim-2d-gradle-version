@@ -3,6 +3,9 @@ package szewoj.race2d.model;
 import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.utilities.Vector2d;
 
+/**
+ * Simulates wheel physics.
+ */
 public class Wheel {
     public static final boolean FRONT = true;
     public static final boolean REAR = false;
@@ -15,6 +18,13 @@ public class Wheel {
     private Vector2d position;
     private double friction;
 
+    /**
+     * Constructor of Wheel.
+     *
+     * @param type          type of wheel (Wheel.FRONT for steering wheel, and Wheel.REAR for fixed wheel)
+     * @param positionX     position of wheel in metres, where 0 is the position of centre of gravity
+     * @param positionY     position of wheel in metres, where 0 is the position of centre of gravity
+     */
     public Wheel( boolean type, double positionX, double positionY ){
         wheelType = type;
         rotationSpeed = 0;
@@ -23,30 +33,57 @@ public class Wheel {
         position = new Vector2d( positionX, positionY );
     }
 
+    /**
+     * Increases rotational speed of the wheel.
+     *
+     * @param difference    value of increase
+     */
     public void increaseRotationSpeed( double difference ){
-        this.rotationSpeed += difference;
+        rotationSpeed += difference;
     }
 
+    /**
+     * Sets new rotational speed of the wheel.
+     *
+     * @param newValue      new value of rotational speed
+     */
     public void setRotationSpeed( double newValue ){
-        this.rotationSpeed = newValue;
+        rotationSpeed = newValue;
     }
 
+    /**
+     * Getter for rotationSpeed property.
+     *
+     * @return  rotationSpeed value
+     */
     public double getRotationSpeed(){
-        return this.rotationSpeed;
+        return rotationSpeed;
     }
 
+    /**
+     * Getter for durability value.
+     *
+     * @return  durability value in range 0.0 - 1.0
+     */
     public double getDurability(){
         return durability.getPercent();
     }
 
+    /**
+     * Setter for friction property.
+     *
+     * @param value new value of friction
+     */
     public void setFriction( double value ){
         friction = value;
     }
 
-    public double getFriction(){
-        return friction;
-    }
-
+    /**
+     * Calculates slip ratio of the wheel.
+     *
+     * @param longitudinalVelocity  velocity longitudinal to wheel
+     * @return                      value of slip ratio
+     */
     public double getSlipRatio( double longitudinalVelocity ){
 
         if(Math.abs(longitudinalVelocity) == 0 )
@@ -55,6 +92,14 @@ public class Wheel {
         return (rotationSpeed*Wheel.RADIUS - longitudinalVelocity) / Math.abs(longitudinalVelocity);
     }
 
+    /**
+     * Calculates slip angle of steering or fixed wheel.
+     *
+     * @param velocity          velocity vector of car
+     * @param carRotationSpeed  yaw rate of car
+     * @param steeringAngle     angle of wheel
+     * @return                  value of slip angle
+     */
     public double getSlipAngle( Vector2d velocity, double carRotationSpeed, double steeringAngle ){
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
@@ -65,6 +110,13 @@ public class Wheel {
         return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(position.getY()) / velocity.getY() );
     }
 
+    /**
+     * Calculates slip angle of fixed wheel.
+     *
+     * @param velocity          velocity vector of car
+     * @param carRotationSpeed  yaw rate of car
+     * @return                  value of slip angle
+     */
     public double getSlipAngle( Vector2d velocity, double carRotationSpeed ){
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
@@ -72,14 +124,28 @@ public class Wheel {
         return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(position.getY()) / velocity.getY() );
     }
 
+    /**
+     * Reduces durability of tire, by calculating damage from slip.
+     *
+     * @param slipRatio     value of slip ratio
+     * @param slipAngle     value of slip angle
+     */
     public void degradeTire( double slipRatio, double slipAngle ){
         durability.addPercent(- ( Math.abs(slipRatio) + Math.abs(slipAngle) ) * DEGRADATION_RATIO );
     }
 
+    /**
+     * Calculates traction multiplier using friction and durability values
+     *
+     * @return  traction multiplier in range 0.0 - 1.0
+     */
     public double getTraction(){
         return (0.6 + 0.4 * durability.getPercent()) * friction;
     }
 
+    /**
+     * Sets value of durability to 1.0.
+     */
     public void switchTire(){
         durability.setPercent(1);
     }

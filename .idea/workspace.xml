@@ -4,9 +4,15 @@
     <list default="true" id="ae2c31c7-476c-41e5-a4eb-3f7885d442a7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Engine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Engine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/FuelTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/FuelTank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Gearbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Gearbox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/LapTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/LapTimer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/WeightTransfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/WeightTransfer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Wheel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/model/Wheel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Percent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Percent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Vector2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/utilities/Vector2d.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/szewoj/race2d/view/ViewManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578867338573</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added ground friction physics&#10;Updated gear ratios">
+      <created>1578910865780</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1578910865780</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -273,7 +286,8 @@
     <MESSAGE value="Added barrier collision detection and bouncing off barriers" />
     <MESSAGE value="Added home screen with controls information" />
     <MESSAGE value="Updated physics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated physics" />
+    <MESSAGE value="Added ground friction physics&#10;Updated gear ratios" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added ground friction physics&#10;Updated gear ratios" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1003" y="222" width="847" height="677" key="#Project_Structure" timestamp="1578856624633">
@@ -284,10 +298,10 @@
       <screen x="59" y="27" width="1861" height="948" />
     </state>
     <state x="722" y="249" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/59.27.1861.948@59.27.1861.948" timestamp="1578761734694" />
-    <state x="768" y="168" width="930" height="807" key="CommitChangelistDialog2" timestamp="1578910824373">
+    <state x="768" y="168" width="930" height="807" key="CommitChangelistDialog2" timestamp="1578920794416">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state x="768" y="168" width="930" height="807" key="CommitChangelistDialog2/59.27.1861.948@59.27.1861.948" timestamp="1578910824373" />
+    <state x="768" y="168" width="930" height="807" key="CommitChangelistDialog2/59.27.1861.948@59.27.1861.948" timestamp="1578920794416" />
     <state width="1815" height="244" key="GridCell.Tab.0.bottom" timestamp="1578910812485">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
@@ -320,10 +334,10 @@
       <screen x="59" y="27" width="1861" height="948" />
     </state>
     <state width="1815" height="302" key="GridCell.Tab.1.right/59.27.1861.948@59.27.1861.948" timestamp="1578867352195" />
-    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1578867344303">
+    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1578910873249">
       <screen x="59" y="27" width="1861" height="948" />
     </state>
-    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2/59.27.1861.948@59.27.1861.948" timestamp="1578867344302" />
+    <state x="584" y="236" width="800" height="528" key="Vcs.Push.Dialog.v2/59.27.1861.948@59.27.1861.948" timestamp="1578910873249" />
     <state x="652" y="231" width="672" height="678" key="search.everywhere.popup" timestamp="1578909596488">
       <screen x="59" y="27" width="1861" height="948" />
     </state>

@@ -1,56 +1,88 @@
 package szewoj.race2d.model;
 
+/**
+ * Engine physics simulation class.
+ */
 public class Engine {
     public static final double MAX_RPM = 6800;
     private double rpm;
 
+    /**
+     * Constructor of Engine.
+     * Sets default rpm as minimal value.
+     */
     public Engine(){
-        this.rpm = 1000;
+        rpm = 1000;
     }
 
+    /**
+     * Approximates torque as rpm function.
+     *
+     * @return  value of torque corresponding to current rpm
+     */
     public double getTorque(){
 
-        if(this.rpm < 2500)
-            return 210 + this.rpm * 20/500;
-        else if(this.rpm < 3750)
+        if(rpm < 2500)
+            return 210 + rpm * 20/500;
+        else if(rpm < 3750)
             return 310;
-        else if(this.rpm < 4400)
-            return 167 + this.rpm * 30/650;
-        else if(this.rpm < 6000)
+        else if(rpm < 4400)
+            return 167 + rpm * 30/650;
+        else if(rpm < 6000)
             return 444;
-        else if(this.rpm < MAX_RPM)
-            return 1368 - this.rpm*154/1000;
+        else if(rpm < MAX_RPM)
+            return 1368 - rpm*154/1000;
         else
-            return (1000-this.rpm)/(MAX_RPM-1000) * 150 + (MAX_RPM-this.rpm) * 0.75;
+            return (1000-rpm)/(MAX_RPM-1000) * 150 + (MAX_RPM-rpm) * 0.75;
 
     }
 
+    /**
+     * Simulates engine breaking phenomenon.
+     *
+     * @return      torque corresponding to engine braking
+     */
     public double getEngineBraking(){
-        if( this.rpm > MAX_RPM )
-            return (1000-this.rpm)/(MAX_RPM-1000) * 150 + (MAX_RPM-this.rpm) * 0.75;
+        if( rpm > MAX_RPM )
+            return (1000-rpm)/(MAX_RPM-1000) * 150 + (MAX_RPM-rpm) * 0.75;
         else
-            return (1000-this.rpm)/(MAX_RPM-1000) * 150;
+            return (1000-rpm)/(MAX_RPM-1000) * 150;
     }
 
+    /**
+     * Sets rpm to value close to input. Simulates engine inertia.
+     *
+     * @param newValue  desired value of torque
+     */
     public void setRpm( double newValue ){
-        this.rpm += 0.20*(newValue-this.rpm);
-        if(this.rpm < 1000)
-            this.rpm = 1000;
+        rpm += 0.20*(newValue-rpm);
+        if(rpm < 1000)
+            rpm = 1000;
     }
 
+    /**
+     * Simulates engine response on throttle with no load on engine shaft.
+     *
+     * @param throttle  value of throttle in range 0.0 - 1.0
+     */
     public void setNeutralGearRpm(  double throttle ){
-        if (this.rpm < MAX_RPM)
-            this.rpm += 0.05*((1000 + (MAX_RPM - 500) * throttle)-this.rpm);
+        if (rpm < MAX_RPM)
+            rpm += 0.05*((1000 + (MAX_RPM - 500) * throttle)-rpm);
         else
-            this.rpm -= 20;
+            rpm -= 20;
 
-        if(this.rpm < 1000)
-            this.rpm = 1000;
+        if(rpm < 1000)
+            rpm = 1000;
 
     }
 
+    /**
+     * Getter of rpm property.
+     *
+     * @return  value of rpm
+     */
     public double getRpm() {
-        return this.rpm;
+        return rpm;
     }
 
 

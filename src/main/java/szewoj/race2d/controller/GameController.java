@@ -8,10 +8,13 @@ import szewoj.race2d.model.LapTimer;
 import szewoj.race2d.model.Vehicle;
 import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.view.ViewManager;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Controller class of application.
+ * Manages user inputs and communication between view and model classes.
+ */
 public class GameController {
 
     private ArrayList<String> input;
@@ -25,6 +28,11 @@ public class GameController {
     private LinkedList<Long> recentTimes;
     private long bestTime;
 
+    /**
+     * Constructor of GameController initializes object with default values
+     *
+     * @param view  instance of ViewManager managed by GameController
+     */
     public GameController(ViewManager view ){
         input = new ArrayList<String>();
         raceCarModel = new Vehicle();
@@ -42,6 +50,9 @@ public class GameController {
         bestTime = -1;
     }
 
+    /**
+     * Main game loop function. Has to be put in any repetitive method of application for it to work.
+     */
     public void refresh(){
         if( mainViewManager.isHomeScreenDisabled() ) {
             raceCarModel.updateInputs(input);
@@ -72,11 +83,16 @@ public class GameController {
             mainViewManager.setTireDurabilityProgress(raceCarModel.getFrontWheelDurability(), raceCarModel.getFrontWheelDurability(), raceCarModel.getRearWheelDurability(), raceCarModel.getRearWheelDurability());
             mainViewManager.setTireChangeProgress(tireChangeProgress.getPercent());
 
-            mainViewManager.updateHitboxes();
+            mainViewManager.showPitstopPane();
             raceCarModel.addCollision(mainViewManager.getBarrierCollisionVector());
         }
     }
 
+    /**
+     * Handle of KeyPressed event.
+     *
+     * @param e     KeyEvent passed to handle
+     */
     public void onKeyPressedHandle(KeyEvent e){
         String keyCode = e.getCode().toString();
 
@@ -93,6 +109,11 @@ public class GameController {
             mainViewManager.disableHomeScreen();
     }
 
+    /**
+     * Handle of KeyReleased event.
+     *
+     * @param e     KeyEvent passed to handle
+     */
     public void onKeyReleasedHandle(KeyEvent e){
         String keyCode = e.getCode().toString();
         input.remove(keyCode);
@@ -101,6 +122,9 @@ public class GameController {
             raceCarModel.shift();
     }
 
+    /**
+     * Performs button management.
+     */
     public void handleButtonInputs(){
         if(mainViewManager.isFuelButtonPressed()){
             raceCarModel.refuel();
@@ -119,6 +143,9 @@ public class GameController {
         }
     }
 
+    /**
+     * Performs lap time management.
+     */
     public void handleLapTimes(){
         mainViewManager.displayTimes( timer.getCurrentLapTime(), bestTime, recentTimes );
 
@@ -126,7 +153,7 @@ public class GameController {
         if( cpIndex > -1 ){
             timer.checkpointCrossed(cpIndex);
             if(timer.isReady()){
-                long newTime = timer.getFinishedLapTime();
+                long newTime = timer.pullFinishedLapTime();
                 recentTimes.addFirst(newTime);
                 recentTimes.removeLast();
                 if(newTime < bestTime | bestTime < 0)

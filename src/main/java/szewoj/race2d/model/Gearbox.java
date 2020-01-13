@@ -1,5 +1,8 @@
 package szewoj.race2d.model;
 
+/**
+ * Simulates gearbox physics.
+ */
 public class Gearbox {
     private int gear;
     private int previous;
@@ -8,6 +11,11 @@ public class Gearbox {
     public static final double DIFF_RATIO = 3.42;
     public static final double TRANS_EFF = 0.9;
 
+    /**
+     * Returns gear ratio corresponding to gear property.
+     *
+     * @return  gear ratio
+     */
     public double getGearRatio(){
 
         switch( gear ){
@@ -30,12 +38,17 @@ public class Gearbox {
         }
     }
 
+    /**
+     * Finalises shift action. Has to be preceded by *Ready() function call.
+     */
     public void shift(){
         gear = ready;
         previous = ready;
     }
 
-
+    /**
+     * Readies up shift action. Has to be followed by shift() function call.
+     */
     public void upShiftReady(){
         if( previous < 6 ) {
             ready = previous + 1;
@@ -43,6 +56,9 @@ public class Gearbox {
         }
     }
 
+    /**
+     * Readies down shift action. Has to be followed by shift() function call.
+     */
     public void downShiftReady(){
         if( previous > -1 ) {
             ready = previous - 1;
@@ -50,6 +66,11 @@ public class Gearbox {
         }
     }
 
+    /**
+     * Getter of gear property value.
+     *
+     * @return  value of gear
+     */
     public int getGear(){
         return gear;
     }

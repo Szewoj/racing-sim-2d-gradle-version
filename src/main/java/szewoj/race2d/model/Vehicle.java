@@ -9,12 +9,17 @@ import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
+/**
+ * Simulates Vehicle physics.
+ * Implements bicycle car physics model.
+ */
 public class Vehicle {
-    //Physics engine variables and constants:
+    //Physics related variables and constants:
+    private static final double TIME_CONST = 1.0/60;
     private static final double AR_CONST = 0.2;
     private static final double RR_CONST = 8.4;
-    private static final double TIME_CONST = 1.0/60;
     private static final double BR_CONST = 10000;
+    private static final double STIFFNESS = 24;
     private static final double MASS_CONST = 1420;
     private static final double WIDTH = 2;
     private static final double LENGTH = 4.5;
@@ -31,13 +36,16 @@ public class Vehicle {
     private double frontEffectiveWeight;
 
     //Input signal variables and constants:
-    private static final double GAIN_IN = 3.0/60; //was /60
-    private static final double LOSS_IN = 2.5/60; //was /60
+    private static final double GAIN_IN = 3.0/60;
+    private static final double LOSS_IN = 2.5/60;
     private Percent throttle;
     private Percent brake;
     private Percent steering;
     private boolean handbrake;
 
+    /**
+     * Default constructor of Vehicle
+     */
     public Vehicle(){
         velocity = new Vector2d( 0, 0);
         yawRate = 0;
@@ -55,6 +63,11 @@ public class Vehicle {
         frontEffectiveWeight = weight.getEffectiveWeightOnFront( 0 );
     }
 
+    /**
+     * Simulates input inertia.
+     *
+     * @param inputs    array of string codes
+     */
     public void updateInputs(ArrayList<String> inputs){
 
         if( inputs.contains("UP") || inputs.contains("W") )
@@ -91,40 +104,88 @@ public class Vehicle {
 
     }
 
+    /**
+     * Calculates longitudinal velocity in kilometers per hour.
+     *
+     * @return longitudinal velocity in kilometers per hour
+     */
     public int getSpeed(){
         return (int) Math.round( 3.6 * (velocity.length()));
     }
 
+    /**
+     * Passes value of getRpm() of engine property.
+     *
+     * @return  value of rpm
+     */
     public double getRpm(){
-        return this.engine.getRpm();
+        return engine.getRpm();
     }
 
+    /**
+     * Returns value of throttle.
+     *
+     * @return  value of throttle in range 0.0 - 1.0
+     */
     public double getThrottle(){
         return throttle.getPercent();
     }
 
+    /**
+     * Returns value of brake.
+     *
+     * @return  value of brake in range 0.0 - 1.0
+     */
     public double getBrake(){
         return brake.getPercent();
     }
 
+    /**
+     * Returns value of steering.
+     *
+     * @return  value of steering in range -1.0 - 1.0
+     */
     public double getSteering(){
         return steering.getPercent();
     }
 
+    /**
+     * Returns gear as int where -1 is reverse and 0 is neutral.
+     *
+     * @return value of gear
+     */
     public int getGear(){ return gearbox.getGear(); }
 
+    /**
+     * Returns percentage of remaining fuel.
+     *
+     * @return  remaining fuel in range 0.0 - 1.0
+     */
     public double getFuel(){
         return fuelTank.getPercent();
     }
 
+    /**
+     * Returns durability of front wheel.
+     *
+     * @return  durability value in range 0.0 - 1.0
+     */
     public double getFrontWheelDurability(){
         return frontWheels.getDurability();
     }
 
+    /**
+     * Returns durability of rear wheel.
+     *
+     * @return  durability value in range 0.0 - 1.0
+     */
     public double getRearWheelDurability(){
         return rearWheels.getDurability();
     }
 
+    /**
+     * Resets values of properties to prevent unexpected behavior
+     */
     private void roundVariablesToZero(){
         if(Math.abs(velocity.getX()) < 0.01)
             velocity.setX( 0 );
@@ -134,6 +195,11 @@ public class Vehicle {
             yawRate = 0;
     }
 
+    /**
+     * Updates velocity vector of car due to collision.
+     *
+     * @param collision     vector from point of collision to centre of car
+     */
     public void addCollision( Vector2d collision ){
         collision.setY( -collision.getY() / 17 );
         collision.setX( collision.getX() / 17 );
@@ -144,6 +210,15 @@ public class Vehicle {
         velocity.setY( velocity.getY() * ( 1 +  strength*collision.getY() ) + 0.5 * Math.signum(collision.getY()));
     }
 
+    /**
+     * Main working loop of car simulation.
+     * Calculates new values of properties.
+     * Edits value of parameters to reflect displacement of the car.
+     *
+     * @param translation   linear displacement
+     * @param turn          rotation around turn radius
+     * @param rotation      rotation around centre
+     */
     public void calculateTransformation( Translate translation, Rotate turn,  Rotate rotation ){
         Vector2d airDrag = new Vector2d();
         double rollRes;
@@ -217,8 +292,8 @@ public class Vehicle {
                 frontLongitudinalSlipRatio = -0.05;
 
             //Calculating lateral forces:
-            frontLateralForce = -24 * frontEffectiveWeight * Math.tan(frontSlipAngle) * frontWheels.getTraction() / (1+10*Math.abs(frontLongitudinalSlipRatio));
-            rearLateralForce = -24  * rearEffectiveWeight * Math.tan(rearSlipAngle) * rearWheels.getTraction() / (1+10*Math.abs(rearLongitudinalSlipRatio));
+            frontLateralForce = -STIFFNESS * frontEffectiveWeight * Math.tan(frontSlipAngle) * frontWheels.getTraction() / (1+10*Math.abs(frontLongitudinalSlipRatio));
+            rearLateralForce = -STIFFNESS * rearEffectiveWeight * Math.tan(rearSlipAngle) * rearWheels.getTraction() / (1+10*Math.abs(rearLongitudinalSlipRatio));
 
             corneringForce = rearLateralForce + Math.cos(steeringAngle) * frontLateralForce + airDrag.getX();
 
@@ -236,8 +311,8 @@ public class Vehicle {
             else
                 frontBrakingTorque = (frontWheels.getRotationSpeed() / 0.05) * BR_CONST * brake.getPercent();
 
-            rearTractiveForce = 24* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
-            frontTractiveForce = 24* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
+            rearTractiveForce = STIFFNESS * rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
+            frontTractiveForce = STIFFNESS * frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
 
             resultantForce = rearTractiveForce + frontTractiveForce + rollRes + airDrag.getY();
 
@@ -343,31 +418,55 @@ public class Vehicle {
         roundVariablesToZero();
     }
 
+    /**
+     * Calls shift() method of gearbox property.
+     */
     public void shift() {
-        this.gearbox.shift();
+        gearbox.shift();
     }
 
+    /**
+     * Calls upShiftReady() method of gearbox property.
+     */
     public void upShiftReady() {
-        this.gearbox.upShiftReady();
+        gearbox.upShiftReady();
     }
 
+    /**
+     * Calls downShiftReady() method of gearbox property.
+     */
     public void downShiftReady() {
-        this.gearbox.downShiftReady();
+        gearbox.downShiftReady();
     }
 
+    /**
+     * Calls refuel() method of fuelTank property.
+     */
     public void refuel(){
         fuelTank.refuel();
     }
 
+    /**
+     * Calls switchTire() method of frontWheels and rearWheels properties.
+     */
     public void changeTires(){
         frontWheels.switchTire();
         rearWheels.switchTire();
     }
 
+    /**
+     * Sets new value of friction property of frontWheels property.
+     *
+     * @param value new value of friction
+     */
     public void setFrontFriction(double value){
         frontWheels.setFriction( value );
     }
-
+    /**
+     * Sets new value of friction property of rearWheels property.
+     *
+     * @param value new value of friction
+     */
     public void setRearFriction(double value){
         rearWheels.setFriction( value );
     }

@@ -24,13 +24,12 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
 import szewoj.race2d.utilities.Vector2d;
-
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Class ViewManager is a view class that displays every item of the program
+ */
 public class ViewManager {
 
     private Rotate rpmPosition;
@@ -57,6 +56,9 @@ public class ViewManager {
                         barrier21, barrier22, barrier23, barrier24, barrier25, barrier26, barrier27, barrier28, barrier29, barrier30,
                         barrier31, barrier32, barrier33, barrier34, barrier35, barrier36, barrier37, barrier38, barrier39, barrier40;
 
+    /**
+     * Public constructor of the class.
+     */
     public ViewManager() {
         rpmPosition = new Rotate( -90, -40, 40 );
         recentTimes = new ArrayList<Label>();
@@ -65,6 +67,9 @@ public class ViewManager {
         trackMask = new Image("/mask.png");
     }
 
+    /**
+     * JavaFX initializer for loading *.fxml files.
+     */
     @FXML
     public void initialize(){
         carSprite.setCache(true);
@@ -85,12 +90,28 @@ public class ViewManager {
         initBarriers();
     }
 
+    /**
+     * Converts coordinate system of the point.
+     *
+     * @param source    node of point's original coordinate system
+     * @param target    node of point's desired coordinate system
+     * @param point     original point
+     * @return          converted point
+     */
     public static Point2D convertPoint(Node source, Node target, Point2D point ){
         Point2D targetPoint = source.localToScene( point );
         targetPoint = target.sceneToLocal( targetPoint );
         return targetPoint;
     }
 
+    /**
+     * Adjusts rotate transform to make it applicable to background.
+     *
+     * @param rotate        original rotate transform
+     * @param source        node of rotate's original coordinate system
+     * @param background    node to which returned rotate transform will be applicable
+     * @return              converted rotate transform
+     */
     public static Rotate adjustToBackground(Rotate rotate, Node source, Node background ){
         Rotate newRotate = rotate.clone();
         Point2D pivot = ViewManager.convertPoint( source, background, new Point2D( rotate.getPivotX(), rotate.getPivotY()) );
@@ -99,11 +120,24 @@ public class ViewManager {
         return newRotate;
     }
 
+    /**
+     * Checks if two Shape objects are intersecting.
+     *
+     * @param shape1    first shape
+     * @param shape2    second shape
+     * @return          boolean value, true if shapes intersect
+     */
     public static boolean checkCollision(Shape shape1, Shape shape2 ){
         Shape intersect = Shape.intersect(shape1, shape2 );
         return intersect.getBoundsInLocal().getWidth() != -1;
     }
 
+    /**
+     * Converts time described by long value into String.
+     *
+     * @param time      time in milliseconds
+     * @return          time described by String
+     */
     public static String timeToString( long time ){
         if( time < 0 )
             return "";
@@ -117,6 +151,12 @@ public class ViewManager {
         return minutes + ":" + seconds + "." + milliseconds;
     }
 
+    /**
+     * Converts time described by long value into String with sign added.
+     *
+     * @param difference    time in milliseconds
+     * @return              time described by String
+     */
     public static String differenceToString( long difference ){
         String sign;
 
@@ -136,6 +176,11 @@ public class ViewManager {
         return sign + minutes + ":" + seconds + "." + milliseconds;
     }
 
+    /**
+     * Gets the friction from trackMask Image in point of the front of the carGroup Node.
+     *
+     * @return      friction value in range 0.0 - 1.0
+     */
     public double getFrontFriction(){
         Point2D frontContactPoint = convertPoint( carGroup, trackSprite, new Point2D( 35.3, 20 ) );
 
@@ -144,7 +189,11 @@ public class ViewManager {
         return reader.getColor( (int)(frontContactPoint.getX()), (int)(frontContactPoint.getY()) + 5 ).getRed();
 
     }
-
+    /**
+     * Gets the friction from trackMask Image in point of the rear of the carGroup Node.
+     *
+     * @return      friction value in range 0.0 - 1.0
+     */
     public double getRearFriction(){
         Point2D rearContactPoint = convertPoint( carGroup, trackSprite, new Point2D( 35.3, 20 ) );
 
@@ -154,11 +203,21 @@ public class ViewManager {
 
     }
 
+    /**
+     * Rotates the rpm-meter to match given rpm value.
+     *
+     * @param rpm   input rpm value
+     */
     @FXML
     public void setRpmPosition( double rpm ){
         this.rpmPosition.setAngle( 135*rpm/7000 - 109.28 );
     }
 
+    /**
+     * Displays the gear as a literal on screen.
+     *
+     * @param gear  gear described as int, where any positive int is matching gear, 0 is treated as neutral, and -1 as reverse
+     */
     @FXML
     public void setGearDisplay( int gear ){
         if( gear > 0 )
@@ -169,21 +228,42 @@ public class ViewManager {
             gearDisplay.setText( "R" );
     }
 
+    /**
+     * Returns the stage that is currently managed by ViewManager class.
+     *
+     * @return  currently managed stage
+     */
     @FXML
     public Stage getStage(){
         return (Stage) trackGroup.getScene().getWindow();
     }
 
+    /**
+     * Sets progress value of corresponding ProgressBar.
+     *
+     * @param progress  double value in range 0.0 - 1.0
+     */
     @FXML
     public void setThrottleProgress( double progress ){
         throttlePB.setProgress( progress );
     }
 
+    /**
+     * Sets progress value of corresponding ProgressBar.
+     *
+     * @param progress  double value in range 0.0 - 1.0
+     */
     @FXML
     public void setBrakeProgress( double progress ){
         brakePB.setProgress( progress );
     }
 
+    /**
+     * Sets progress value of one of corresponding ProgressBars.
+     * Positive value is set to the right one, and negative to the left one.
+     *
+     * @param steering  double value in range -1.0 - 1.0
+     */
     @FXML
     public void setSteeringProgress( double steering ){
         if(steering > 0){
@@ -194,6 +274,13 @@ public class ViewManager {
             steerRightPB.setProgress(0);
         }
     }
+
+    /**
+     * Sets progress value of corresponding ProgressBar.
+     * Adds special effects to low input values.
+     *
+     * @param fuel  double value in range 0.0 - 1.0
+     */
     @FXML
     public void setFuelProgress(double fuel ){
         if( pitstopPane.isVisible() )
@@ -206,6 +293,14 @@ public class ViewManager {
             fuelPB.setStyle("-fx-accent: BLACK");
     }
 
+    /**
+     * Sets progress value of corresponding ProgressBar.
+     *
+     * @param leftFront     durability of left front tire described by a double value in range 0.0 - 1.0
+     * @param rightFront    durability of right front tire described by a double value in range 0.0 - 1.0
+     * @param leftRear      durability of left rear tire described by a double value in range 0.0 - 1.0
+     * @param rightRear     durability of right rear tire described by a double value in range 0.0 - 1.0
+     */
     @FXML
     public void setTireDurabilityProgress( double leftFront, double rightFront, double leftRear, double rightRear ){
         LFTirePB.setProgress(leftFront);
@@ -214,17 +309,36 @@ public class ViewManager {
         RRTirePB.setProgress(rightRear);
     }
 
+    /**
+     * Sets progress value of corresponding ProgressBar only if its parent pane is visible.
+     *
+     * @param progress  double value in range 0.0 - 1.0
+     */
     @FXML
     public void setTireChangeProgress( double progress ){
         if( pitstopPane.isVisible() )
             pitstopTiresPB.setProgress( progress );
     }
 
+    /**
+     * Applies given transformations to carGroup Node.
+     *
+     * @param translation   linear displacement
+     * @param turning       rotation around turn radius
+     * @param rotation      rotation around centre
+     */
     @FXML
     public void applyCarTransforms(Translate translation, Rotate turning, Rotate rotation ){
         carGroup.getTransforms().addAll( translation.clone(), turning.clone(), rotation.clone() );
     }
 
+    /**
+     * Applies inverse of given transformations to carGroup Node.
+     *
+     * @param translation   linear displacement
+     * @param turning       rotation around turn radius
+     * @param rotation      rotation around centre
+     */
     @FXML
     public void applyCarTransformsReversed(Translate translation, Rotate turning, Rotate rotation ){
 
@@ -239,6 +353,13 @@ public class ViewManager {
         carGroup.getTransforms().addAll( rotate, turn, translate );
     }
 
+    /**
+     * Applies inverse of given transformations applicable to background to trackGroup Node.
+     *
+     * @param translation   linear displacement
+     * @param turning       rotation around turn radius
+     * @param rotation      rotation around centre
+     */
     @FXML
     public void applyBackgroundTransformsAdjustedReversed( Translate translation, Rotate turning, Rotate rotation ){
         double yx = trackGroup.getLocalToSceneTransform().getMyx();
@@ -258,11 +379,23 @@ public class ViewManager {
 
     }
 
+    /**
+     * Displays value of given speed on screen.
+     *
+     * @param speed     displayed speed
+     */
     @FXML
     public void displaySpeed( int speed ){
         speedTxt.setText( Math.abs(speed) + "" );
     }
 
+    /**
+     * Displays given times in specified section of screen.
+     *
+     * @param current   current measured time
+     * @param best      best lap time since start of application
+     * @param recent    LinkedList of 3 most recent lap times
+     */
     @FXML
     public void displayTimes( long current, long best, LinkedList<Long> recent){
         currentTime.setText( timeToString(current) );
@@ -277,14 +410,22 @@ public class ViewManager {
         }
     }
 
+    /**
+     * Shows pitstopPane if car entered pitstop.
+     */
     @FXML
-    public void updateHitboxes(){
+    public void showPitstopPane(){
         if( checkCollision( carHitbox, pitstopHitbox) )
             pitstopPane.setVisible(true);
         else
             pitstopPane.setVisible(false);
     }
 
+    /**
+     * Checks if car collides with any barrier, and if yes, then it returns the vector of collision.
+     *
+     * @return      vector from point of collision to centre of car
+     */
     @FXML
     public Vector2d getBarrierCollisionVector(){
         Vector2d out = new Vector2d(0, 0);
@@ -307,6 +448,11 @@ public class ViewManager {
         return out;
     }
 
+    /**
+     * Checks if car crossed any checkpoint, and if yes, then it returns the checkpoint's index.
+     *
+     * @return
+     */
     @FXML
     public int getCrossedCheckpoint(){
         if(checkCollision(carHitbox, start))
@@ -318,6 +464,11 @@ public class ViewManager {
         return-1;
     }
 
+    /**
+     * Sets handles for key control.
+     *
+     * @param controller    GameController class providing handles
+     */
     @FXML
     public void setupKeyListeners(GameController controller){
         getStage().getScene().setOnKeyPressed(
@@ -339,27 +490,48 @@ public class ViewManager {
 
     }
 
+    /**
+     * Passes value of isPressed() of fuelButton property.
+     *
+     * @return      value of isPressed() of fuelButton property
+     */
     @FXML
     public boolean isFuelButtonPressed(){
         return fuelButton.isPressed();
     }
 
+    /**
+     * Passes value of isPressed() of tiresButton property.
+     *
+     * @return
+     */
     @FXML
     public boolean isTiresButtonPressed(){
         return tiresButton.isPressed();
     }
 
+    /**
+     * Passes value of isDisabled() of homeScreen property.
+     *
+     * @return
+     */
     @FXML
     public boolean isHomeScreenDisabled(){
         return homeScreen.isDisabled();
     }
 
+    /**
+     * Disables and sets homeScreen property invisible.
+     */
     @FXML
     public void disableHomeScreen(){
         homeScreen.setVisible(false);
         homeScreen.setDisable(true);
     }
 
+    /**
+     * Initializes barriers property with all Line barrier* property.
+     */
     @FXML
     private void initBarriers(){
         barriers.add(barrier1);
