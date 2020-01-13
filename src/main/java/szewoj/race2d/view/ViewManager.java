@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
@@ -111,9 +112,9 @@ public class ViewManager {
         time -= 60000 * minutes;
         int seconds = (int)(time/1000);
         time -= 1000 * seconds;
-        int miliseconds = (int)time;
+        int milliseconds = (int)time;
 
-        return minutes + ":" + seconds + "." + miliseconds;
+        return minutes + ":" + seconds + "." + milliseconds;
     }
 
     public static String differenceToString( long difference ){
@@ -130,9 +131,27 @@ public class ViewManager {
         difference -= 60000 * minutes;
         int seconds = (int)(difference/1000);
         difference -= 1000 * seconds;
-        int miliseconds = (int)difference;
+        int milliseconds = (int)difference;
 
-        return sign + minutes + ":" + seconds + "." + miliseconds;
+        return sign + minutes + ":" + seconds + "." + milliseconds;
+    }
+
+    public double getFrontFriction(){
+        Point2D frontContactPoint = convertPoint( carGroup, trackSprite, new Point2D( 35.3, 20 ) );
+
+        PixelReader reader = trackMask.getPixelReader();
+
+        return reader.getColor( (int)(frontContactPoint.getX()), (int)(frontContactPoint.getY()) + 5 ).getRed();
+
+    }
+
+    public double getRearFriction(){
+        Point2D rearContactPoint = convertPoint( carGroup, trackSprite, new Point2D( 35.3, 20 ) );
+
+        PixelReader reader = trackMask.getPixelReader();
+
+        return reader.getColor( (int)(rearContactPoint.getX()), (int)(rearContactPoint.getY()) + 5 ).getRed();
+
     }
 
     @FXML

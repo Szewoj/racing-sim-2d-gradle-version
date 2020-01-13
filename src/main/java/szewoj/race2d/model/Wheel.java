@@ -13,13 +13,14 @@ public class Wheel {
     private final boolean wheelType;
     private Percent durability;
     private Vector2d position;
+    private double friction;
 
     public Wheel( boolean type, double positionX, double positionY ){
-        this.wheelType = type;
-        this.rotationSpeed = 0;
+        wheelType = type;
+        rotationSpeed = 0;
         durability = new Percent();
         durability.setPercent( 1 );
-        this.position = new Vector2d( positionX, positionY );
+        position = new Vector2d( positionX, positionY );
     }
 
     public void increaseRotationSpeed( double difference ){
@@ -38,6 +39,14 @@ public class Wheel {
         return durability.getPercent();
     }
 
+    public void setFriction( double value ){
+        friction = value;
+    }
+
+    public double getFriction(){
+        return friction;
+    }
+
     public double getSlipRatio( double longitudinalVelocity ){
 
         if(Math.abs(longitudinalVelocity) == 0 )
@@ -47,21 +56,20 @@ public class Wheel {
     }
 
     public double getSlipAngle( Vector2d velocity, double carRotationSpeed, double steeringAngle ){
-        double slipAngle;
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
 
         if(wheelType)
-            return  -steeringAngle * Math.signum(velocity.getY()) + Math.atan( velocity.getX() + carRotationSpeed*Math.abs(this.position.getY()) / Math.abs(velocity.getY()) );
+            return  -steeringAngle * Math.signum(velocity.getY()) + Math.atan( velocity.getX() + carRotationSpeed*Math.abs(position.getY()) / Math.abs(velocity.getY()) );
 
-        return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(this.position.getY()) / velocity.getY() );
+        return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(position.getY()) / velocity.getY() );
     }
 
     public double getSlipAngle( Vector2d velocity, double carRotationSpeed ){
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
 
-        return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(this.position.getY()) / velocity.getY() );
+        return Math.atan( velocity.getX() - carRotationSpeed*Math.abs(position.getY()) / velocity.getY() );
     }
 
     public void degradeTire( double slipRatio, double slipAngle ){
@@ -69,7 +77,7 @@ public class Wheel {
     }
 
     public double getTraction(){
-        return 0.6 + 0.4 * durability.getPercent();
+        return (0.6 + 0.4 * durability.getPercent()) * friction;
     }
 
     public void switchTire(){

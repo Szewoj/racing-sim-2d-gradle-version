@@ -58,6 +58,9 @@ public class GameController {
             memTurn = new Rotate(0);
             memRot = new Rotate(0);
 
+            raceCarModel.setFrontFriction(mainViewManager.getFrontFriction());
+            raceCarModel.setRearFriction(mainViewManager.getRearFriction());
+
             raceCarModel.calculateTransformation(memTrans, memTurn, memRot);
 
             mainViewManager.applyCarTransforms(memTrans, memTurn, memRot);

@@ -236,8 +236,8 @@ public class Vehicle {
             else
                 frontBrakingTorque = (frontWheels.getRotationSpeed() / 0.05) * BR_CONST * brake.getPercent();
 
-            rearTractiveForce = 18* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
-            frontTractiveForce = 18* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
+            rearTractiveForce = 24* rearLongitudinalSlipRatio * rearWheels.getTraction() * rearEffectiveWeight;
+            frontTractiveForce = 24* frontLongitudinalSlipRatio * frontWheels.getTraction() * frontEffectiveWeight;
 
             resultantForce = rearTractiveForce + frontTractiveForce + rollRes + airDrag.getY();
 
@@ -265,7 +265,7 @@ public class Vehicle {
             frontResultantTorque = frontBrakingTorque;
             resultantForce = -(rearResultantTorque + frontResultantTorque)/Wheel.RADIUS + rollRes + airDrag.getY() ;
             rearWheels.setRotationSpeed( 2*velocity.getY()/Wheel.RADIUS );
-            frontWheels.setRotationSpeed( 2*velocity.getY()/Wheel.RADIUS );
+            frontWheels.setRotationSpeed( 1.5*velocity.getY()/Wheel.RADIUS );
         }
 
         if( Math.abs(velocity.getY()) > 14 ){
@@ -341,10 +341,6 @@ public class Vehicle {
         fuelTank.consumeFuel( engine.getRpm(), throttle.getPercent() );
 
         roundVariablesToZero();
-
-        //System.out.print( (int)( 3.6 * frontWheels.getRotationSpeed()*Wheel.RADIUS) + " " + (int)( 3.6 * rearWheels.getRotationSpeed()*Wheel.RADIUS) + " " + (int)(resultantForce) + " " + (int)(rearTractiveForce) + " " + (int)(frontTractiveForce) + " " + (int)(rearResultantTorque) + " " + (int)(frontResultantTorque) + " " + (int)(rollRes) + " " + (int)(airDrag.getY()) + " " + (int)(rearTractiveForce)+ " \n");
-        //System.out.println( ( velocity.getY() ) + " " + ( velocity.getX() ) + " " + (yawAngularSpeed) );
-
     }
 
     public void shift() {
@@ -366,6 +362,14 @@ public class Vehicle {
     public void changeTires(){
         frontWheels.switchTire();
         rearWheels.switchTire();
+    }
+
+    public void setFrontFriction(double value){
+        frontWheels.setFriction( value );
+    }
+
+    public void setRearFriction(double value){
+        rearWheels.setFriction( value );
     }
 
 }
