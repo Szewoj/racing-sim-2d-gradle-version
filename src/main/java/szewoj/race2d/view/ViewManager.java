@@ -1,6 +1,5 @@
 package szewoj.race2d.view;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.CacheHint;
@@ -13,7 +12,6 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -25,7 +23,7 @@ import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
 import szewoj.race2d.utilities.Vector2d;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class ViewManager is a view class that displays every item of the program
@@ -33,9 +31,9 @@ import java.util.LinkedList;
 public class ViewManager {
 
     private Rotate rpmPosition;
-    private ArrayList<Label> recentTimes;
-    private ArrayList<Label> differences;
-    private ArrayList<Line> barriers;
+    private List<Label> recentTimes;
+    private List<Label> differences;
+    private List<Line> barriers;
     private Image trackMask;
 
     @FXML private AnchorPane homeScreen;
@@ -61,9 +59,9 @@ public class ViewManager {
      */
     public ViewManager() {
         rpmPosition = new Rotate( -90, -40, 40 );
-        recentTimes = new ArrayList<Label>();
-        differences = new ArrayList<Label>();
-        barriers = new ArrayList<Line>();
+        recentTimes = new ArrayList<>();
+        differences = new ArrayList<>();
+        barriers = new ArrayList<>();
         trackMask = new Image("/mask.png");
     }
 
@@ -394,10 +392,10 @@ public class ViewManager {
      *
      * @param current   current measured time
      * @param best      best lap time since start of application
-     * @param recent    LinkedList of 3 most recent lap times
+     * @param recent    List of 3 most recent lap times
      */
     @FXML
-    public void displayTimes( long current, long best, LinkedList<Long> recent){
+    public void displayTimes( long current, long best, List<Long> recent){
         currentTime.setText( timeToString(current) );
         bestTime.setText( timeToString(best) );
         for( int i = 0; i < 3; ++i ){
@@ -450,8 +448,9 @@ public class ViewManager {
 
     /**
      * Checks if car crossed any checkpoint, and if yes, then it returns the checkpoint's index.
+     * If none of known checkpoints are crossed, method returns code of value -1.
      *
-     * @return
+     * @return      checkpoint index
      */
     @FXML
     public int getCrossedCheckpoint(){
@@ -472,20 +471,10 @@ public class ViewManager {
     @FXML
     public void setupKeyListeners(GameController controller){
         getStage().getScene().setOnKeyPressed(
-                new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent e) {
-                        controller.onKeyPressedHandle( e );
-                    }
-                }
+                controller::onKeyPressedHandle
         );
         getStage().getScene().setOnKeyReleased(
-                new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent e) {
-                        controller.onKeyReleasedHandle( e );
-                    }
-                }
+                controller::onKeyReleasedHandle
         );
 
     }
@@ -503,7 +492,7 @@ public class ViewManager {
     /**
      * Passes value of isPressed() of tiresButton property.
      *
-     * @return
+     * @return      value of isPressed() of tiresButton property
      */
     @FXML
     public boolean isTiresButtonPressed(){
@@ -513,7 +502,7 @@ public class ViewManager {
     /**
      * Passes value of isDisabled() of homeScreen property.
      *
-     * @return
+     * @return      value of isDisabled() of homeScreen property
      */
     @FXML
     public boolean isHomeScreenDisabled(){

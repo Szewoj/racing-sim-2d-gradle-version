@@ -10,6 +10,7 @@ import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.view.ViewManager;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Controller class of application.
@@ -17,7 +18,7 @@ import java.util.LinkedList;
  */
 public class GameController {
 
-    private ArrayList<String> input;
+    private List<String> input;
     private Vehicle raceCarModel;
     private ViewManager mainViewManager;
     private Translate memTrans;
@@ -34,7 +35,7 @@ public class GameController {
      * @param view  instance of ViewManager managed by GameController
      */
     public GameController(ViewManager view ){
-        input = new ArrayList<String>();
+        input = new ArrayList<>();
         raceCarModel = new Vehicle();
         mainViewManager = view;
         memTrans = new Translate(0, 0, 0 );
@@ -43,7 +44,7 @@ public class GameController {
         tireChangeProgress = new Percent();
         mainViewManager.setupKeyListeners( this );
         timer = new LapTimer(3);
-        recentTimes = new LinkedList<Long>();
+        recentTimes = new LinkedList<>();
         recentTimes.add(-1L);
         recentTimes.add(-1L);
         recentTimes.add(-1L);

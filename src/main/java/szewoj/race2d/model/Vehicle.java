@@ -5,7 +5,7 @@ import javafx.scene.transform.Translate;
 import szewoj.race2d.utilities.Percent;
 import szewoj.race2d.utilities.Vector2d;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -15,14 +15,16 @@ import static java.lang.Math.abs;
  */
 public class Vehicle {
     //Physics related variables and constants:
-    private static final double TIME_CONST = 1.0/60;
-    private static final double AR_CONST = 0.2;
-    private static final double RR_CONST = 8.4;
-    private static final double BR_CONST = 10000;
-    private static final double STIFFNESS = 24;
+    private static final double TIME_CONST = 1.0/60;        //time of one tick
+    private static final double AR_CONST = 0.2;             //air resistance coefficient
+    private static final double RR_CONST = 8.4;             //rolling resistance coefficient
+    private static final double BR_CONST = 10000;           //braking torque
+    private static final double STIFFNESS = 24;             //tire stiffness
     private static final double MASS_CONST = 1420;
     private static final double WIDTH = 2;
     private static final double LENGTH = 4.5;
+    private static final double CRITICAL_SPEED = 15;        //speed under which slip angle physics fails
+    private static final double METER_TO_PIXEL_RATIO = 17;
     private Vector2d velocity;
     private double yawRate;
     private Engine engine;
@@ -31,7 +33,7 @@ public class Vehicle {
     private Wheel frontWheels;
     private Wheel rearWheels;
     private WeightTransfer weight;
-    private double momentOfInteria;
+    private double momentOfInertia;
     private double rearEffectiveWeight;
     private double frontEffectiveWeight;
 
@@ -58,7 +60,7 @@ public class Vehicle {
         frontWheels = new Wheel(Wheel.FRONT, 0, 2.6);
         rearWheels = new Wheel(Wheel.REAR, 0, -1.4);
         weight = new WeightTransfer( MASS_CONST, 2.4, 0.5, 1.6 );
-        momentOfInteria = weight.getMass() * ( WIDTH*WIDTH + LENGTH*LENGTH) / 12;
+        momentOfInertia = weight.getMass() * ( WIDTH*WIDTH + LENGTH*LENGTH) / 12;
         rearEffectiveWeight =  weight.getEffectiveWeightOnRear( 0 );
         frontEffectiveWeight = weight.getEffectiveWeightOnFront( 0 );
     }
@@ -68,7 +70,7 @@ public class Vehicle {
      *
      * @param inputs    array of string codes
      */
-    public void updateInputs(ArrayList<String> inputs){
+    public void updateInputs(List<String> inputs){
 
         if( inputs.contains("UP") || inputs.contains("W") )
             throttle.addPercent(GAIN_IN);
@@ -196,6 +198,17 @@ public class Vehicle {
     }
 
     /**
+     * Calculates reduction of traction based on longitudinal slip.
+     * Simulates understeer when braking and oversteer when accelerating.
+     *
+     * @param longitudinalSlipRatio     longitudinal slip of tire
+     * @return                          traction reduction coefficient
+     */
+    private double getSlipTractionCoefficient(double longitudinalSlipRatio ){
+        return 1.0 / (1+10*Math.abs(longitudinalSlipRatio));
+    }
+
+    /**
      * Updates velocity vector of car due to collision.
      *
      * @param collision     vector from point of collision to centre of car
@@ -206,8 +219,8 @@ public class Vehicle {
 
         double strength = (1 - collision.length()/5.20);
 
-        velocity.setX( velocity.getX() * ( 1 + 2 * strength*collision.getX() ) + 0.5 * Math.signum(collision.getX()));
-        velocity.setY( velocity.getY() * ( 1 +  strength*collision.getY() ) + 0.5 * Math.signum(collision.getY()));
+        velocity.setX( velocity.getX()  +  strength*collision.getX() * Math.abs(velocity.getX()) + strength*collision.getX() );
+        velocity.setY( velocity.getY()  +  strength*collision.getY() * Math.abs(velocity.getY()) + strength*collision.getY() );
     }
 
     /**
@@ -242,7 +255,9 @@ public class Vehicle {
         double steeringAngle = Math.toRadians( -45 * steering.getPercent() );
 
         weight.setMass( Vehicle.MASS_CONST + fuelTank.getMass() );
-        momentOfInteria = weight.getMass() * ( ( WIDTH*WIDTH + LENGTH*LENGTH) / 12 + 1.6 * 1.6 );
+
+        //moment of inertia of cuboid with Steiner's equation for displaced axis
+        momentOfInertia = weight.getMass() * ( ( WIDTH*WIDTH + LENGTH*LENGTH) / 12 + 1.6 * 1.6 );
 
         if( handbrake ) {
             rearWheels.setRotationSpeed(0);
@@ -260,7 +275,9 @@ public class Vehicle {
 
         engineBrakingTorque =  -engine.getEngineBraking() * gearbox.getGearRatio() * Gearbox.DIFF_RATIO * Gearbox.TRANS_EFF * (1 - throttle.getPercent());
 
-        if( abs(velocity.getY()) > 0.3 ) {
+
+        if( abs(velocity.getY()) > 0.5 ) {
+        //Physics using slip
             //Calculating slip:
 
             frontSlipAngle = frontWheels.getSlipAngle(velocity, yawRate, steeringAngle );
@@ -292,11 +309,10 @@ public class Vehicle {
                 frontLongitudinalSlipRatio = -0.05;
 
             //Calculating lateral forces:
-            frontLateralForce = -STIFFNESS * frontEffectiveWeight * Math.tan(frontSlipAngle) * frontWheels.getTraction() / (1+10*Math.abs(frontLongitudinalSlipRatio));
-            rearLateralForce = -STIFFNESS * rearEffectiveWeight * Math.tan(rearSlipAngle) * rearWheels.getTraction() / (1+10*Math.abs(rearLongitudinalSlipRatio));
+            frontLateralForce = -STIFFNESS * frontEffectiveWeight * Math.tan(frontSlipAngle) * frontWheels.getTraction() * getSlipTractionCoefficient(frontLongitudinalSlipRatio);
+            rearLateralForce = -STIFFNESS * rearEffectiveWeight * Math.tan(rearSlipAngle) * rearWheels.getTraction() * getSlipTractionCoefficient(rearLongitudinalSlipRatio);
 
             corneringForce = rearLateralForce + Math.cos(steeringAngle) * frontLateralForce + airDrag.getX();
-
             yawTorque = -rearLateralForce * 1.4 + frontLateralForce * 2.6;
 
             //Calculating longitudinal forces:
@@ -325,6 +341,7 @@ public class Vehicle {
             frontWheels.degradeTire( frontLongitudinalSlipRatio, frontSlipAngle );
             rearWheels.degradeTire( rearLongitudinalSlipRatio, rearSlipAngle );
         } else {
+        //Physics using forces on centre of gravity
 
             if( abs(velocity.getY()) > 0.1 )
                 rearBrakingTorque = velocity.getY()/ abs(velocity.getY()) * BR_CONST * brake.getPercent();
@@ -339,25 +356,29 @@ public class Vehicle {
             rearResultantTorque = driveTorque + engineBrakingTorque + rearBrakingTorque;
             frontResultantTorque = frontBrakingTorque;
             resultantForce = -(rearResultantTorque + frontResultantTorque)/Wheel.RADIUS + rollRes + airDrag.getY() ;
+
+            //Wheels are still slipping to allow transitions between slip based and non slip based physics
             rearWheels.setRotationSpeed( 2*velocity.getY()/Wheel.RADIUS );
             frontWheels.setRotationSpeed( 1.5*velocity.getY()/Wheel.RADIUS );
         }
 
-        if( Math.abs(velocity.getY()) > 14 ){
 
-            yawRate += yawTorque / momentOfInteria * TIME_CONST;
+        if( Math.abs(velocity.getY()) > CRITICAL_SPEED ){
+        //Application of turn forces and moments over critical speed
+            yawRate += yawTorque / momentOfInertia * TIME_CONST;
 
             velocity.setY( velocity.getY() + resultantForce * Vehicle.TIME_CONST / weight.getMass() );
             velocity.setX( velocity.getX() + (corneringForce + airDrag.getX()) * Vehicle.TIME_CONST / weight.getMass() );
 
-            translation.setX(17 * velocity.getX() * TIME_CONST);
-            translation.setY(-17 * velocity.getY() * TIME_CONST);
+            translation.setX( METER_TO_PIXEL_RATIO * velocity.getX() * TIME_CONST );
+            translation.setY( -METER_TO_PIXEL_RATIO * velocity.getY() * TIME_CONST );
 
             rotation.setPivotX(35.3);
             rotation.setPivotY( 90 );
             rotation.setAngle( Math.toDegrees( yawRate * TIME_CONST ) );
 
         } else if( Math.abs(velocity.getX()) > 0.05 ) {
+        //Application of turn during free slide
 
             if( Math.abs(yawRate) > 0.1 ) {
                 yawTorque = -20 * weight.getMass() * Math.signum(yawRate) - weight.getMass() * Math.signum(velocity.getY()) * Math.tan(steeringAngle);
@@ -367,31 +388,32 @@ public class Vehicle {
             }
 
             if( abs(velocity.getX()) > 0.1 ) {
-                corneringForce = -10 * weight.getMass() * Math.signum(velocity.getX());
+                corneringForce = -15 * weight.getMass() * Math.signum(velocity.getX());
 
             } else {
-                corneringForce = -5 * weight.getMass() * velocity.getX();
+                corneringForce = -10 * weight.getMass() * velocity.getX();
             }
 
-            yawRate += yawTorque / momentOfInteria * TIME_CONST;
+            yawRate += yawTorque / momentOfInertia * TIME_CONST;
 
             velocity.setY( velocity.getY() + resultantForce * Vehicle.TIME_CONST / weight.getMass() );
             velocity.setX( velocity.getX() + (corneringForce + airDrag.getX()) * Vehicle.TIME_CONST / weight.getMass() );
 
-            translation.setX(17 * velocity.getX() * TIME_CONST);
-            translation.setY(-17 * velocity.getY() * TIME_CONST);
+            translation.setX( METER_TO_PIXEL_RATIO * velocity.getX() * TIME_CONST );
+            translation.setY( -METER_TO_PIXEL_RATIO * velocity.getY() * TIME_CONST );
 
             rotation.setPivotX(35.3);
             rotation.setPivotY( 90 );
             rotation.setAngle( Math.toDegrees( yawRate * TIME_CONST ) );
 
         } else {
+        //Application of movement under critical speed
             if( steeringAngle != 0 ){
                 double turnRadius = - (LENGTH) / Math.sin( steeringAngle );
 
                 yawRate = velocity.getY() / turnRadius;
 
-                turn.setPivotX(35.3 + 17 * turnRadius);
+                turn.setPivotX(35.3 + METER_TO_PIXEL_RATIO * turnRadius);
                 turn.setPivotY(130);
                 turn.setAngle( yawRate );
 
@@ -399,7 +421,7 @@ public class Vehicle {
 
             } else {
                 velocity.setY( velocity.getY() + resultantForce * Vehicle.TIME_CONST / weight.getMass() );
-                translation.setY(-17 * velocity.getY() * TIME_CONST);
+                translation.setY( -METER_TO_PIXEL_RATIO * velocity.getY() * TIME_CONST );
             }
         }
 

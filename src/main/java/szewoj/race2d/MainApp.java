@@ -17,7 +17,7 @@ public class MainApp extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("layout.fxml"));
         Parent root = loader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Racing Game 2D");
         primaryStage.setScene(new Scene(root));
 
         ViewManager mainView = loader.getController();
