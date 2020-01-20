@@ -1,7 +1,7 @@
 package szewoj.race2d.model;
 
 import szewoj.race2d.utilities.Percent;
-import szewoj.race2d.utilities.Vector2d;
+import szewoj.race2d.utilities.Vector2D;
 
 /**
  * Simulates wheel physics.
@@ -15,7 +15,7 @@ public class Wheel {
     private double rotationSpeed;
     private final boolean wheelType;
     private Percent durability;
-    private Vector2d position;
+    private Vector2D position;
     private double friction;
 
     /**
@@ -30,7 +30,7 @@ public class Wheel {
         rotationSpeed = 0;
         durability = new Percent();
         durability.setPercent( 1 );
-        position = new Vector2d( positionX, positionY );
+        position = new Vector2D( positionX, positionY );
     }
 
     /**
@@ -100,7 +100,7 @@ public class Wheel {
      * @param steeringAngle     angle of wheel
      * @return                  value of slip angle
      */
-    public double getSlipAngle( Vector2d velocity, double carRotationSpeed, double steeringAngle ){
+    public double getSlipAngle(Vector2D velocity, double carRotationSpeed, double steeringAngle ){
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
 
@@ -117,7 +117,7 @@ public class Wheel {
      * @param carRotationSpeed  yaw rate of car
      * @return                  value of slip angle
      */
-    public double getSlipAngle( Vector2d velocity, double carRotationSpeed ){
+    public double getSlipAngle(Vector2D velocity, double carRotationSpeed ){
         if(Math.abs(velocity.getY()) == 0 )
             return 0;
 

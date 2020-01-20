@@ -3,7 +3,7 @@ package szewoj.race2d.model;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import szewoj.race2d.utilities.Percent;
-import szewoj.race2d.utilities.Vector2d;
+import szewoj.race2d.utilities.Vector2D;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class Vehicle {
     private static final double LENGTH = 4.5;
     private static final double CRITICAL_SPEED = 15;        //speed under which slip angle physics fails
     private static final double METER_TO_PIXEL_RATIO = 17;
-    private Vector2d velocity;
+    private Vector2D velocity;
     private double yawRate;
     private Engine engine;
     private Gearbox gearbox;
@@ -49,7 +49,7 @@ public class Vehicle {
      * Default constructor of Vehicle
      */
     public Vehicle(){
-        velocity = new Vector2d( 0, 0);
+        velocity = new Vector2D( 0, 0);
         yawRate = 0;
         engine = new Engine();
         throttle = new Percent();
@@ -213,7 +213,7 @@ public class Vehicle {
      *
      * @param collision     vector from point of collision to centre of car
      */
-    public void addCollision( Vector2d collision ){
+    public void addCollision( Vector2D collision ){
         collision.setY( -collision.getY() / 17 );
         collision.setX( collision.getX() / 17 );
 
@@ -233,7 +233,7 @@ public class Vehicle {
      * @param rotation      rotation around centre
      */
     public void calculateTransformation( Translate translation, Rotate turn,  Rotate rotation ){
-        Vector2d airDrag = new Vector2d();
+        Vector2D airDrag = new Vector2D();
         double rollRes;
         double rearBrakingTorque;
         double frontBrakingTorque;
@@ -425,7 +425,7 @@ public class Vehicle {
             }
         }
 
-        velocity = new Vector2d( velocity.getX()*Math.cos( Math.toRadians(rotation.getAngle()) ) - velocity.getY()*Math.sin( Math.toRadians(rotation.getAngle()) ), velocity.getX()*Math.sin( Math.toRadians(rotation.getAngle()) ) + velocity.getY()*Math.cos( Math.toRadians( rotation.getAngle() )) );
+        velocity = new Vector2D( velocity.getX()*Math.cos( Math.toRadians(rotation.getAngle()) ) - velocity.getY()*Math.sin( Math.toRadians(rotation.getAngle()) ), velocity.getX()*Math.sin( Math.toRadians(rotation.getAngle()) ) + velocity.getY()*Math.cos( Math.toRadians( rotation.getAngle() )) );
 
         rearEffectiveWeight = weight.getEffectiveWeightOnRear( resultantForce );
         frontEffectiveWeight = weight.getEffectiveWeightOnFront( resultantForce );

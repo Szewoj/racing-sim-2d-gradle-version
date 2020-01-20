@@ -3,14 +3,14 @@ package szewoj.race2d.utilities;
 /**
  * Container for two double values with additional operations.
  */
-public class Vector2d {
+public class Vector2D {
     private double x;
     private double y;
 
     /**
      * Default constructor.
      */
-    public Vector2d(){
+    public Vector2D(){
         x = 0;
         y = 0;
     }
@@ -21,7 +21,7 @@ public class Vector2d {
      * @param x x property of new Vector2d
      * @param y y property of new Vector2d
      */
-    public Vector2d( double x, double y ){
+    public Vector2D(double x, double y ){
         this.x = x;
         this.y = y;
     }
@@ -31,7 +31,7 @@ public class Vector2d {
      *
      * @param origin original Vector2d
      */
-    public Vector2d( Vector2d origin ){
+    public Vector2D(Vector2D origin ){
         x = origin.getX();
         y = origin.getY();
     }

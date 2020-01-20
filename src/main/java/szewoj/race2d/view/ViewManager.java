@@ -21,7 +21,7 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
-import szewoj.race2d.utilities.Vector2d;
+import szewoj.race2d.utilities.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -425,8 +425,8 @@ public class ViewManager {
      * @return      vector from point of collision to centre of car
      */
     @FXML
-    public Vector2d getBarrierCollisionVector(){
-        Vector2d out = new Vector2d(0, 0);
+    public Vector2D getBarrierCollisionVector(){
+        Vector2D out = new Vector2D(0, 0);
 
         Shape intersect = null;
         for(Line barrier : barriers ){
@@ -437,8 +437,8 @@ public class ViewManager {
                 intersect = null;
         }
         if(intersect != null){
-            Point2D intersectCenter = new Point2D( intersect.getBoundsInLocal().getCenterX(), intersect.getBoundsInLocal().getCenterY());
-            Point2D carCenter = convertPoint(carHitbox, intersect, new Point2D( carHitbox.getBoundsInLocal().getCenterX(), carHitbox.getBoundsInLocal().getCenterY()));
+            Point2D intersectCenter = new Point2D( intersect.getBoundsInLocal().getMinX() + intersect.getBoundsInLocal().getWidth() / 2.0, intersect.getBoundsInLocal().getMinY() + intersect.getBoundsInLocal().getHeight() / 2.0);
+            Point2D carCenter = convertPoint(carHitbox, intersect, new Point2D( carHitbox.getBoundsInLocal().getMinX() + carHitbox.getBoundsInLocal().getWidth()/2.0 , carHitbox.getBoundsInLocal().getMinY() + carHitbox.getBoundsInLocal().getHeight()/2.0 ));
 
             out.setX( carCenter.getX() - intersectCenter.getX() );
             out.setY( carCenter.getY() - intersectCenter.getY() );
