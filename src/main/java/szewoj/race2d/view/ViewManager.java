@@ -17,11 +17,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Affine;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import szewoj.race2d.controller.GameController;
-import szewoj.race2d.utilities.Vector2D;
+import szewoj.race2d.utilities.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,6 +211,7 @@ public class ViewManager {
     @FXML
     public void setRpmPosition( double rpm ){
         this.rpmPosition.setAngle( 135*rpm/7000 - 109.28 );
+
     }
 
     /**
@@ -328,6 +331,7 @@ public class ViewManager {
     @FXML
     public void applyCarTransforms(Translate translation, Rotate turning, Rotate rotation ){
         carGroup.getTransforms().addAll( translation.clone(), turning.clone(), rotation.clone() );
+        mergeTransform( carGroup );
     }
 
     /**
@@ -349,6 +353,7 @@ public class ViewManager {
         rotate.setAngle( -rotate.getAngle() );
 
         carGroup.getTransforms().addAll( rotate, turn, translate );
+        mergeTransform( carGroup );
     }
 
     /**
@@ -375,6 +380,7 @@ public class ViewManager {
         rotate.setAngle( -rotate.getAngle() );
         trackGroup.getTransforms().add( rotate );
 
+        mergeTransform( trackGroup );
     }
 
     /**
@@ -425,8 +431,8 @@ public class ViewManager {
      * @return      vector from point of collision to centre of car
      */
     @FXML
-    public Vector2D getBarrierCollisionVector(){
-        Vector2D out = new Vector2D(0, 0);
+    public Vector2 getBarrierCollisionVector(){
+        Vector2 out = new Vector2(0, 0);
 
         Shape intersect = null;
         for(Line barrier : barriers ){
@@ -518,6 +524,22 @@ public class ViewManager {
         homeScreen.setDisable(true);
     }
 
+    /**
+     * Merges all transforms applied to node into one affine transform.
+     *
+     * @param node      Node which transforms will be merged.
+     */
+    @FXML
+    public void mergeTransform( Node node ){
+        Affine affine = new Affine();
+
+        for( Transform transform : node.getTransforms() ){
+            affine.append(transform);
+        }
+
+        node.getTransforms().setAll( affine );
+    }
+    
     /**
      * Initializes barriers property with all Line barrier* property.
      */
